@@ -53,5 +53,5 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 
 [[github](http://github.com/lim-zy)]
 
-* Role: Developer
-* Responsibilities: UI
+* Role: Integration
+* Responsibilities: In charge of versioning of the code, integrating various parts of the software to create a whole.
