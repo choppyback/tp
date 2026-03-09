@@ -1,0 +1,78 @@
+package seedu.address.model.person;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+/**
+ * Represents a Person's address in the address book.
+ * Guarantees: immutable; is valid as declared in {@link #isValidAvailability(String)}
+ */
+public class Availability {
+
+    public static final String MESSAGE_CONSTRAINTS = "Availability should be in the format"
+            + "day:start-end separated by commas with no spaces.\n"
+            + "Example: mon:0900-1000,tue:1000-1100,wed:1100-1200\n"
+            + "- Days must be a 3-letter abbreviation (mon, tue, wed, thu, fri, sat, sun).\n"
+            + "- Times must be in valid 24-hour format (0000-2359).\n"
+            + "- It can also be left completely empty.";
+
+    /*
+     * Regex breakdown:
+     * - Time: ([01][0-9]|2[0-3])[0-5][0-9] matches 0000 to 2359
+     * - Day: (mon|tue|wed|thu|fri|sat|sun)
+     * - Single Slot: day:time-time
+     * - Full String: empty string OR single slot followed by optionally more (,slot)
+     */
+    private static final String TIME_REGEX = "([01][0-9]|2[0-3])[0-5][0-9]";
+    private static final String DAY_REGEX = "(?i)(mon|tue|wed|thu|fri|sat|sun)"; // (?i) makes it case-insensitive
+    private static final String SINGLE_SLOT_REGEX = DAY_REGEX + ":" + TIME_REGEX + "-" + TIME_REGEX;
+
+    // Validates an empty string ^$ OR a proper comma-separated availability list without spaces
+    public static final String VALIDATION_REGEX = "^$|^" + SINGLE_SLOT_REGEX + "(," + SINGLE_SLOT_REGEX + ")*$";
+
+    public final String value;
+
+    /**
+     * Constructs an {@code Availability}.
+     *
+     * @param availability A valid availability.
+     */
+    public Availability(String availability) {
+        requireNonNull(availability);
+        checkArgument(isValidAvailability(availability), MESSAGE_CONSTRAINTS);
+        value = availability;
+    }
+
+    /**
+     * Returns true if a given string is a valid availability.
+     */
+    public static boolean isValidAvailability(String test) {
+        return test.matches(VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof Availability)) {
+            return false;
+        }
+
+        Availability otherAvailability = (Availability) other;
+        return value.equals(otherAvailability.value);
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
