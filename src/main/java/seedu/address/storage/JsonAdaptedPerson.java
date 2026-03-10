@@ -106,6 +106,10 @@ class JsonAdaptedPerson {
         }
         final Address modelAddress = new Address(address);
 
+        if (availability == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Availability.class.getSimpleName()));
+        }
         if (!Availability.isValidAvailability(availability)) {
             throw new IllegalValueException(Availability.MESSAGE_CONSTRAINTS);
         }
