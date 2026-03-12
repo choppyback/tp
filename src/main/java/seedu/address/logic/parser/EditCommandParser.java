@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRESS_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
 
 import seedu.address.commons.core.index.Index;
@@ -28,7 +29,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         requireNonNull(args);
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
-                                                 PREFIX_ADDRESS, PREFIX_TRAINING_GOAL, PREFIX_AVAILABILITY);
+                        PREFIX_ADDRESS, PREFIX_TRAINING_GOAL,
+                        PREFIX_AVAILABILITY, PREFIX_PROGRESS_RECORD);
         Index index;
 
         try {
@@ -38,7 +40,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE,
-                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TRAINING_GOAL, PREFIX_AVAILABILITY);
+                PREFIX_EMAIL, PREFIX_ADDRESS, PREFIX_TRAINING_GOAL, PREFIX_AVAILABILITY, PREFIX_PROGRESS_RECORD);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -61,6 +63,10 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
             editPersonDescriptor.setAvailability(ParserUtil.parseAvailability(argMultimap.getValue(PREFIX_AVAILABILITY)
                     .get()));
+        }
+        if (argMultimap.getValue(PREFIX_PROGRESS_RECORD).isPresent()) {
+            editPersonDescriptor.setProgressRecord(ParserUtil.parseProgressRecord(
+                    argMultimap.getValue(PREFIX_PROGRESS_RECORD).get()));
         }
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {

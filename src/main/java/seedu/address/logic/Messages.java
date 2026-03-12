@@ -48,7 +48,9 @@ public class Messages {
                 .append("; Availability: ")
                 .append(person.getAvailability())
                 .append("; Skill: ")
-                .append(person.getSkill());
+                .append(person.getSkill())
+                .append("; Progress: ")
+                .append(person.getProgressRecord());
         return builder.toString();
     }
 

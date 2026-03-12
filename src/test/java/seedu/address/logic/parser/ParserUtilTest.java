@@ -20,12 +20,14 @@ public class ParserUtilTest {
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
     private static final String INVALID_TRAINING_GOAL = " ";
+    private static final String INVALID_PROGRESS_RECORD = "123";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
     private static final String VALID_TRAINING_GOAL = "5 sec 2.4k";
+    private static final String VALID_PROGRESS_RECORD = "100%";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -162,5 +164,15 @@ public class ParserUtilTest {
     @Test
     public void parseTrainingGoal_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseAddress(INVALID_TRAINING_GOAL));
+    }
+
+    @Test
+    public void parseProgressRecord_null_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> ParserUtil.parseProgressRecord(null));
+    }
+
+    @Test
+    public void parseProgressRecord_invalidValue_throwsParseException() {
+        assertThrows(ParseException.class, () -> ParserUtil.parseProgressRecord(INVALID_PROGRESS_RECORD));
     }
 }

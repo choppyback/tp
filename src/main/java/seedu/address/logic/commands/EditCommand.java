@@ -25,6 +25,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.TrainingGoal;
 
 /**
@@ -103,8 +104,10 @@ public class EditCommand extends Command {
                                             .orElse(personToEdit.getTrainingGoal());
         Availability updatedAvailability = editPersonDescriptor.getAvailability()
                 .orElse(personToEdit.getAvailability());
+        ProgressRecord updatedProgressRecord = editPersonDescriptor.getProgressRecord()
+                .orElse(personToEdit.getProgressRecord());
         return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedTrainingGoal, updatedAvailability);
+                updatedAddress, updatedTrainingGoal, updatedAvailability, updatedProgressRecord);
     }
 
     @Override
@@ -142,6 +145,7 @@ public class EditCommand extends Command {
         private Address address;
         private TrainingGoal trainingGoal;
         private Availability availability;
+        private ProgressRecord progressRecord;
 
         public EditPersonDescriptor() {}
 
@@ -156,6 +160,7 @@ public class EditCommand extends Command {
             setAddress(toCopy.address);
             setTrainingGoal(toCopy.trainingGoal);
             setAvailability(toCopy.availability);
+            setProgressRecord(toCopy.progressRecord);
         }
 
         /**
@@ -213,6 +218,14 @@ public class EditCommand extends Command {
             return Optional.ofNullable(availability);
         }
 
+        public void setProgressRecord(ProgressRecord progressRecord) {
+            this.progressRecord = progressRecord;
+        }
+
+        public Optional<ProgressRecord> getProgressRecord() {
+            return Optional.ofNullable(progressRecord);
+        }
+
         @Override
         public boolean equals(Object other) {
             if (other == this) {
@@ -230,7 +243,8 @@ public class EditCommand extends Command {
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(trainingGoal, otherEditPersonDescriptor.trainingGoal)
-                    && Objects.equals(availability, otherEditPersonDescriptor.availability);
+                    && Objects.equals(availability, otherEditPersonDescriptor.availability)
+                    && Objects.equals(progressRecord, otherEditPersonDescriptor.progressRecord);
         }
 
         @Override

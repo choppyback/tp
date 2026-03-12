@@ -8,6 +8,7 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAILABILITY_BO
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PROGRESS_RECORD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAINING_GOAL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAINING_GOAL_BOB;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -87,6 +88,10 @@ public class PersonTest {
         // different tags -> returns false
         editedAlice = new PersonBuilder(ALICE).withTrainingGoal(VALID_TRAINING_GOAL_AMY).build();
         assertFalse(ALICE.equals(editedAlice));
+
+        // different progressRecord -> returns false
+        editedAlice = new PersonBuilder(ALICE).withProgressRecord(VALID_PROGRESS_RECORD).build();
+        assertFalse(ALICE.equals(editedAlice));
     }
 
     @Test
@@ -95,7 +100,8 @@ public class PersonTest {
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", trainingGoal=" + ALICE.getTrainingGoal()
                 + ", availability=" + ALICE.getAvailability()
-                + ", skill=" + ALICE.getSkill() + "}";
+                + ", skill=" + ALICE.getSkill()
+                + ", progressRecord=" + ALICE.getProgressRecord() + "}";
         assertEquals(expected, ALICE.toString());
     }
 }

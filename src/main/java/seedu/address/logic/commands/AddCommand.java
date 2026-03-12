@@ -6,6 +6,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRESS_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
 
@@ -31,6 +32,7 @@ public class AddCommand extends Command {
             + PREFIX_TRAINING_GOAL + "TRAINING GOAL\n"
             + PREFIX_AVAILABILITY + "AVAILABILITY "
             + PREFIX_SKILL + "SKILL "
+            + PREFIX_PROGRESS_RECORD + "PROGRESS_RECORD\n"
             + "Example: " + COMMAND_WORD + " "
             + PREFIX_NAME + "John Doe "
             + PREFIX_PHONE + "98765432 "
@@ -38,7 +40,8 @@ public class AddCommand extends Command {
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
             + PREFIX_TRAINING_GOAL + "Get a 6 pack in 2 minutes "
             + PREFIX_AVAILABILITY + "mon:0900-1000,tue:1000-1100,wed:1100-1200 "
-            + PREFIX_SKILL + "pro ";
+            + PREFIX_SKILL + "pro "
+            + PREFIX_PROGRESS_RECORD + "100%";
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";

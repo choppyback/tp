@@ -10,6 +10,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
 
@@ -27,6 +28,7 @@ class JsonAdaptedPerson {
     private final String skill;
     private final String trainingGoal;
     private final String availability;
+    private String progressRecord;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -35,7 +37,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("trainingGoal") String trainingGoal, @JsonProperty("availability") String availability,
-            @JsonProperty("skill") String skill) {
+            @JsonProperty("skill") String skill, @JsonProperty("progressRecord") String progressRecord) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -43,6 +45,7 @@ class JsonAdaptedPerson {
         this.trainingGoal = trainingGoal;
         this.availability = availability;
         this.skill = skill;
+        this.progressRecord = progressRecord;
     }
 
     /**
@@ -56,6 +59,7 @@ class JsonAdaptedPerson {
         trainingGoal = source.getTrainingGoal().value;
         availability = source.getAvailability().value;
         skill = source.getSkill().value;
+        progressRecord = source.getProgressRecord().value;
     }
 
     /**
@@ -123,8 +127,15 @@ class JsonAdaptedPerson {
             modelSkill = new Skill(skill);
         }
 
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTrainingGoal, modelAvailability,
-                modelSkill);
+        if (progressRecord == null) {
+            progressRecord = "0%";
+        }
+        if (!ProgressRecord.isValidProgress(progressRecord)) {
+            throw new IllegalValueException(ProgressRecord.MESSAGE_CONSTRAINTS);
+        }
+        final ProgressRecord modelProgressRecord = new ProgressRecord(progressRecord);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelTrainingGoal,
+                modelAvailability, modelSkill, modelProgressRecord);
     }
 
 }

@@ -6,6 +6,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
 
@@ -29,6 +30,7 @@ public class PersonBuilder {
     private Skill skill;
     private TrainingGoal trainingGoal;
     private Availability availability;
+    private ProgressRecord progressRecord;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -41,6 +43,7 @@ public class PersonBuilder {
         trainingGoal = new TrainingGoal(DEFAULT_TRAINING_GOAL);
         availability = new Availability(DEFAULT_AVAILABILITY);
         skill = new Skill(DEFAULT_SKILL);
+        progressRecord = new ProgressRecord(ProgressRecord.DEFAULT_PROGRESS);
     }
 
     /**
@@ -54,6 +57,7 @@ public class PersonBuilder {
         trainingGoal = personToCopy.getTrainingGoal();
         availability = personToCopy.getAvailability();
         skill = personToCopy.getSkill();
+        progressRecord = personToCopy.getProgressRecord();
     }
 
     /**
@@ -112,8 +116,17 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code ProgressRecord} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withProgressRecord(String progressRecord) {
+        this.progressRecord = new ProgressRecord(progressRecord);
+        return this;
+    }
+
+
     public Person build() {
-        return new Person(name, phone, email, address, trainingGoal, availability, skill);
+        return new Person(name, phone, email, address, trainingGoal, availability, skill, progressRecord);
     }
 
 }

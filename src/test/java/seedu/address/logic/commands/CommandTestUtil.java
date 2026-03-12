@@ -42,6 +42,7 @@ public class CommandTestUtil {
     public static final String VALID_TRAINING_GOAL_BOB = "stay fit";
     public static final String VALID_AVAILABILITY_AMY = "mon:0900-1000,tue:0000-2359,wed:0100-0300";
     public static final String VALID_AVAILABILITY_BOB = "mon:0900-1000,tue:0000-2359,wed:0100-0300";
+    public static final String VALID_PROGRESS_RECORD = "50%";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -66,6 +67,8 @@ public class CommandTestUtil {
     public static final String INVALID_TRAINING_GOAL_DESC = " "
             + PREFIX_TRAINING_GOAL; // empty string not allowed for trainingGoals
     public static final String INVALID_AVAILABILITY_DESC = " " + PREFIX_AVAILABILITY + "mon: 0900"; // space not allowed
+    public static final String INVALID_PROGRESS_RECORD = "123";
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
