@@ -1,16 +1,12 @@
 package seedu.address.testutil;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Availability;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
-import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.person.TrainingGoal;
 
 /**
  * A utility class to help with building Person objects.
@@ -21,14 +17,15 @@ public class PersonBuilder {
     public static final String DEFAULT_PHONE = "85355255";
     public static final String DEFAULT_EMAIL = "amy@gmail.com";
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
+    public static final String DEFAULT_TRAINING_GOAL = "get a 6 pack";
     public static final String DEFAULT_AVAILABILITY = "mon:0900-1000,tue:0000-2359,wed:0100-0300";
 
     private Name name;
     private Phone phone;
     private Email email;
     private Address address;
+    private TrainingGoal trainingGoal;
     private Availability availability;
-    private Set<Tag> tags;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -38,8 +35,8 @@ public class PersonBuilder {
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
+        trainingGoal = new TrainingGoal(DEFAULT_TRAINING_GOAL);
         availability = new Availability(DEFAULT_AVAILABILITY);
-        tags = new HashSet<>();
     }
 
     /**
@@ -50,8 +47,8 @@ public class PersonBuilder {
         phone = personToCopy.getPhone();
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
+        trainingGoal = personToCopy.getTrainingGoal();
         availability = personToCopy.getAvailability();
-        tags = new HashSet<>(personToCopy.getTags());
     }
 
     /**
@@ -65,8 +62,8 @@ public class PersonBuilder {
     /**
      * Parses the {@code tags} into a {@code Set<Tag>} and set it to the {@code Person} that we are building.
      */
-    public PersonBuilder withTags(String ... tags) {
-        this.tags = SampleDataUtil.getTagSet(tags);
+    public PersonBuilder withTrainingGoal(String trainingGoal) {
+        this.trainingGoal = new TrainingGoal(trainingGoal);
         return this;
     }
 
@@ -103,7 +100,7 @@ public class PersonBuilder {
     }
 
     public Person build() {
-        return new Person(name, phone, email, address, availability, tags);
+        return new Person(name, phone, email, address, trainingGoal, availability);
     }
 
 }

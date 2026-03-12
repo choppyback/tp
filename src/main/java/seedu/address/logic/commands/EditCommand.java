@@ -6,15 +6,12 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -28,7 +25,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.TrainingGoal;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -45,8 +42,8 @@ public class EditCommand extends Command {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_AVAILABILITY + "AVAILABILITY] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_TRAINING_GOAL + "TRAINING GOAL] "
+            + "[" + PREFIX_AVAILABILITY + "AVAILABILITY]\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -102,11 +99,12 @@ public class EditCommand extends Command {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        TrainingGoal updatedTrainingGoal = editPersonDescriptor.getTrainingGoal()
+                                            .orElse(personToEdit.getTrainingGoal());
         Availability updatedAvailability = editPersonDescriptor.getAvailability()
                 .orElse(personToEdit.getAvailability());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
-
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedAvailability, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail,
+                updatedAddress, updatedTrainingGoal, updatedAvailability);
     }
 
     @Override
@@ -142,29 +140,29 @@ public class EditCommand extends Command {
         private Phone phone;
         private Email email;
         private Address address;
+        private TrainingGoal trainingGoal;
         private Availability availability;
-        private Set<Tag> tags;
 
         public EditPersonDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
+         * A defensive copy of {@code trainingGoal} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setTrainingGoal(toCopy.trainingGoal);
             setAvailability(toCopy.availability);
-            setTags(toCopy.tags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, availability, tags);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, trainingGoal, availability);
         }
 
         public void setName(Name name) {
@@ -199,29 +197,20 @@ public class EditCommand extends Command {
             return Optional.ofNullable(address);
         }
 
+        public void setTrainingGoal(TrainingGoal trainingGoal) {
+            this.trainingGoal = trainingGoal;
+        }
+
+        public Optional<TrainingGoal> getTrainingGoal() {
+            return Optional.ofNullable(trainingGoal);
+        }
+
         public void setAvailability(Availability availability) {
             this.availability = availability;
         }
 
         public Optional<Availability> getAvailability() {
             return Optional.ofNullable(availability);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
 
         @Override
@@ -240,8 +229,8 @@ public class EditCommand extends Command {
                     && Objects.equals(phone, otherEditPersonDescriptor.phone)
                     && Objects.equals(email, otherEditPersonDescriptor.email)
                     && Objects.equals(address, otherEditPersonDescriptor.address)
-                    && Objects.equals(availability, otherEditPersonDescriptor.availability)
-                    && Objects.equals(tags, otherEditPersonDescriptor.tags);
+                    && Objects.equals(trainingGoal, otherEditPersonDescriptor.trainingGoal)
+                    && Objects.equals(availability, otherEditPersonDescriptor.availability);
         }
 
         @Override
@@ -251,9 +240,10 @@ public class EditCommand extends Command {
                     .add("phone", phone)
                     .add("email", email)
                     .add("address", address)
+                    .add("trainingGoal", trainingGoal)
                     .add("availability", availability)
-                    .add("tags", tags)
                     .toString();
         }
+
     }
 }

@@ -5,49 +5,49 @@
     "phone" : "94351253",
     "email" : "alice@example.com",
     "address" : "123, Jurong West Ave 6, #08-111",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ "friends" ]
+    "trainingGoal" : "6 pack",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "Benson Meier",
     "phone" : "98765432",
     "email" : "johnd@example.com",
     "address" : "311, Clementi Ave 2, #02-25",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ "owesMoney", "friends" ]
+    "trainingGoal" : "beach bod",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "Carl Kurz",
     "phone" : "95352563",
     "email" : "heinz@example.com",
     "address" : "wall street",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ ]
+    "trainingGoal" : "get the huzz",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "Daniel Meier",
     "phone" : "87652533",
     "email" : "cornelia@example.com",
     "address" : "10th street",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ "friends" ]
+    "trainingGoal" : "win world heavy weight championship",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "Elle Meyer",
     "phone" : "9482224",
     "email" : "werner@example.com",
     "address" : "michegan ave",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ ]
+    "trainingGoal" : "stay fit",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "Fiona Kunz",
     "phone" : "9482427",
     "email" : "lydia@example.com",
     "address" : "little tokyo",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ ]
+    "trainingGoal" : "reach 50 kg",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   }, {
     "name" : "George Best",
     "phone" : "9482442",
     "email" : "anna@example.com",
     "address" : "4th street",
-    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300",
-    "tags" : [ ]
+    "trainingGoal" : "be number 1 pro wrestler",
+    "availability" : "mon:0900-1000,tue:0000-2359,wed:0100-0300"
   } ]
 }

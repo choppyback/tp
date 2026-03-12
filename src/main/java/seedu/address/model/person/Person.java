@@ -2,13 +2,9 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
-import seedu.address.model.tag.Tag;
 
 /**
  * Represents a Person in the address book.
@@ -23,20 +19,22 @@ public class Person {
 
     // Data fields
     private final Address address;
+    private final TrainingGoal trainingGoal;
     private final Availability availability;
-    private final Set<Tag> tags = new HashSet<>();
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Availability availability, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, availability, tags);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  TrainingGoal trainingGoal, Availability availability) {
+        requireAllNonNull(name, phone, email, address, trainingGoal, availability);
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.trainingGoal = trainingGoal;
         this.availability = availability;
-        this.tags.addAll(tags);
     }
 
     public Name getName() {
@@ -55,16 +53,12 @@ public class Person {
         return address;
     }
 
-    public Availability getAvailability() {
-        return availability;
+    public TrainingGoal getTrainingGoal() {
+        return trainingGoal;
     }
 
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags);
+    public Availability getAvailability() {
+        return availability;
     }
 
     /**
@@ -100,14 +94,14 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && availability.equals(otherPerson.availability)
-                && tags.equals(otherPerson.tags);
+                && trainingGoal.equals(otherPerson.trainingGoal)
+                && availability.equals(otherPerson.availability);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, availability, tags);
+        return Objects.hash(name, phone, email, address, trainingGoal, availability);
     }
 
     @Override
@@ -117,8 +111,8 @@ public class Person {
                 .add("phone", phone)
                 .add("email", email)
                 .add("address", address)
+                .add("trainingGoal", trainingGoal)
                 .add("availability", availability)
-                .add("tags", tags)
                 .toString();
     }
 
