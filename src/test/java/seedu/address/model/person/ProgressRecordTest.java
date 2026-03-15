@@ -85,9 +85,7 @@ public class ProgressRecordTest {
         assertTrue(pr100.compareTo(pr0) > 0);
         assertFalse(pr0.compareTo(pr50) == 0);
         assertFalse(pr100.compareTo(pr0) < 0);
-
-        // test null
-        assertTrue(pr0.compareTo(null) == 0);
+        assertTrue(pr0.compareTo(pr0) == 0);
 
     }
 }

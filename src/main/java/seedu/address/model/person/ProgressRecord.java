@@ -99,11 +99,8 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
      */
     @Override
     public int compareTo(ProgressRecord other) {
+        requireNonNull(other);
         if (other == this) {
-            return 0;
-        }
-        // instanceof handles nulls
-        if (!(other instanceof ProgressRecord)) {
             return 0;
         }
         ProgressRecord otherProgress = (ProgressRecord) other;
