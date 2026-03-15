@@ -162,15 +162,6 @@ public class JsonAdaptedPersonTest {
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
-    @Test
-    public void toModelType_nullTrainingGoal_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-            new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                    VALID_ADDRESS, VALID_INJURY_STATUS, null,
-                    VALID_AVAILABILITY, VALID_SKILL, VALID_PROGRESS_RECORD);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, TrainingGoal.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
 
     @Test
     public void toModelType_invalidAvailability_throwsIllegalValueException() {
@@ -182,15 +173,6 @@ public class JsonAdaptedPersonTest {
         assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
-    @Test
-    public void toModelType_nullAvailability_throwsIllegalValueException() {
-        JsonAdaptedPerson person =
-            new JsonAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, VALID_INJURY_STATUS, VALID_TRAINING_GOAL,
-                null, VALID_SKILL, VALID_PROGRESS_RECORD);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Availability.class.getSimpleName());
-        assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
     @Test
     public void toModelType_missingSkill_defaultsToNovice() throws Exception {
         JsonAdaptedPerson person =

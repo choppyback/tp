@@ -19,7 +19,7 @@ public class Availability {
             + "- Times must be in valid 24-hour format (0000-2359).\n"
             + "- Start time must be strictly before the end time.\n"
             + "- It cannot be left completely empty.";
-
+    public static final String DEFAULT_AVAILABILITY = "mon:0000-0001";
     /*
      * Regex breakdown:
      * - Time: ([01][0-9]|2[0-3])[0-5][0-9] matches 0000 to 2359
