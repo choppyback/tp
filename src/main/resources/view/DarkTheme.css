@@ -352,7 +352,7 @@
 }
 
 .skill_tag_label {
-    -fx-padding: 8 12 8 12;
+    -fx-padding: 8 12;
     -fx-background-radius: 20; /* This creates the rounded pill shape */
     -fx-border-radius: 20;
     -fx-font-family: "Segoe UI Semibold";
@@ -380,12 +380,24 @@
 
 .list-cell .availability_label {
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
+    -fx-font-size: 13px;
     -fx-text-fill: #0e9af3;
+}
+
+.list-cell .trainingGoal_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13px;
+    -fx-text-fill: yellow;
+}
+
+.list-cell .injury_label {
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-size: 13px;
+    -fx-text-fill: red;
 }
 
 .list-cell .progress_label {
     -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 16px;
-    -fx-text-fill: orange;
+    -fx-font-size: 13px;
+    -fx-text-fill: darkorange;
 }
