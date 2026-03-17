@@ -72,7 +72,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getInjuryStatus().orElse(null) + ", injuryStatus="
                 + editPersonDescriptor.getAddress().orElse(null) + ", trainingGoal="
                 + editPersonDescriptor.getTrainingGoal().orElse(null) + ", availability="
-                + editPersonDescriptor.getAvailability().orElse(null) + "}";
+                + editPersonDescriptor.getAvailability().orElse(null) + ", progressRecord="
+                + editPersonDescriptor.getProgressRecord().orElse(null) + "}";
 
         assertEquals(expected, editPersonDescriptor.toString());
     }

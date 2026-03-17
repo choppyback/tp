@@ -23,15 +23,36 @@ public class ProgressRecordTest {
     public void isValidProgressRecord() {
         // null ProgressRecord
         assertThrows(NullPointerException.class, () -> ProgressRecord.isValidProgress(null));
+        assertThrows(ArithmeticException.class, () -> ProgressRecord.parseToPercentage("10/0"));
 
-        // invalid addresses
+        // invalid progress record
         assertFalse(ProgressRecord.isValidProgress("")); // empty string
         assertFalse(ProgressRecord.isValidProgress(" ")); // spaces only
+        assertFalse(ProgressRecord.isValidProgress("101%"));
+        assertFalse(ProgressRecord.isValidProgress("-1%"));
+        assertFalse(ProgressRecord.isValidProgress("-1%"));
+        assertFalse(ProgressRecord.isValidProgress("10/0"));
 
-        // valid addresses
+        // valid progress record
         assertTrue(ProgressRecord.isValidProgress("100%"));
         assertTrue(ProgressRecord.isValidProgress("0%")); // one character
         assertTrue(ProgressRecord.isValidProgress("50%"));
+        assertTrue(ProgressRecord.isValidProgress("1/2"));
+        assertTrue(ProgressRecord.isValidProgress("20/50"));
+
+    }
+
+    @Test
+    public void parseToPercentage() {
+        //divide by zero
+        assertThrows(ArithmeticException.class, () -> ProgressRecord.parseToPercentage("1/0"));
+
+        assertTrue(ProgressRecord.parseToPercentage("50%") == 50.0);
+        assertTrue(ProgressRecord.parseToPercentage("1/2") == 50.0);
+        assertTrue(ProgressRecord.parseToPercentage("100%") == 100.0);
+        assertTrue(ProgressRecord.parseToPercentage("0%") == 0.0);
+        assertTrue(ProgressRecord.parseToPercentage("20") == 20.0);
+
     }
 
     @Test
@@ -52,5 +73,19 @@ public class ProgressRecordTest {
 
         // different values -> returns false
         assertFalse(pr.equals(new ProgressRecord("100%")));
+    }
+
+    @Test
+    public void compareTo() {
+        ProgressRecord pr0 = new ProgressRecord("0%");
+        ProgressRecord pr50 = new ProgressRecord("50%");
+        ProgressRecord pr100 = new ProgressRecord("100%");
+
+        assertTrue(pr0.compareTo(pr50) < 0);
+        assertTrue(pr100.compareTo(pr0) > 0);
+        assertFalse(pr0.compareTo(pr50) == 0);
+        assertFalse(pr100.compareTo(pr0) < 0);
+        assertTrue(pr0.compareTo(pr0) == 0);
+
     }
 }
