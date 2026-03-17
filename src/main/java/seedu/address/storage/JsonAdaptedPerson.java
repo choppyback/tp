@@ -115,23 +115,23 @@ class JsonAdaptedPerson {
             modelInjuryStatus = new InjuryStatus(injuryStatus);
         }
 
+        final TrainingGoal modelTrainingGoal;
         if (trainingGoal == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                                            TrainingGoal.class.getSimpleName()));
-        }
-        if (!TrainingGoal.isValidTrainingGoal(trainingGoal)) {
+            modelTrainingGoal = new TrainingGoal(TrainingGoal.DEFAULT_TRAINING_GOAL);
+        } else if (!TrainingGoal.isValidTrainingGoal(trainingGoal)) {
             throw new IllegalValueException(TrainingGoal.MESSAGE_CONSTRAINTS);
+        } else {
+            modelTrainingGoal = new TrainingGoal(trainingGoal);
         }
 
-        final TrainingGoal modelTrainingGoal = new TrainingGoal(trainingGoal);
+        final Availability modelAvailability;
         if (availability == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Availability.class.getSimpleName()));
-        }
-        if (!Availability.isValidAvailability(availability)) {
+            modelAvailability = new Availability(Availability.DEFAULT_AVAILABILITY);
+        } else if (!Availability.isValidAvailability(availability)) {
             throw new IllegalValueException(Availability.MESSAGE_CONSTRAINTS);
+        } else {
+            modelAvailability = new Availability(availability);
         }
-        final Availability modelAvailability = new Availability(availability);
 
         final Skill modelSkill;
         if (skill == null) {
