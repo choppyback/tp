@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class TrainingGoal {
 
     public static final String MESSAGE_CONSTRAINTS = "Training Goals can take any values, and it should not be blank";
-
+    public static final String DEFAULT_TRAINING_GOAL = "None";
     /*
      * The first character of the trainingGoal must not be a whitespace,
      * otherwise " " (a blank string) becomes a valid input.

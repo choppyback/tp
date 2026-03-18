@@ -69,7 +69,7 @@ public class AddCommandParser implements Parser<AddCommand> {
                 argMultimap.getValue(PREFIX_PROGRESS_RECORD).orElse(ProgressRecord.DEFAULT_PROGRESS));
 
         Person person = new Person(name, phone, email, address, injuryStatus,
-            trainingGoal, availability, skill, progressRecord);
+            trainingGoal, availability, progressRecord, skill);
 
         return new AddCommand(person);
     }

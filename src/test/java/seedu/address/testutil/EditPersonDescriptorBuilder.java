@@ -7,6 +7,7 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
 
 /**
@@ -35,6 +36,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setAddress(person.getAddress());
         descriptor.setTrainingGoal(person.getTrainingGoal());
         descriptor.setAvailability(person.getAvailability());
+        descriptor.setSkill(person.getSkill());
     }
 
     /**
@@ -82,6 +84,14 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withTrainingGoal(String trainingGoal) {
         descriptor.setTrainingGoal(new TrainingGoal(trainingGoal));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Skill} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withSkill(String skill) {
+        descriptor.setSkill(new Skill(skill));
         return this;
     }
 

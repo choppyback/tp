@@ -73,7 +73,8 @@ public class EditPersonDescriptorTest {
                 + editPersonDescriptor.getAddress().orElse(null) + ", trainingGoal="
                 + editPersonDescriptor.getTrainingGoal().orElse(null) + ", availability="
                 + editPersonDescriptor.getAvailability().orElse(null) + ", progressRecord="
-                + editPersonDescriptor.getProgressRecord().orElse(null) + "}";
+                + editPersonDescriptor.getProgressRecord().orElse(null) + ", skill="
+                + editPersonDescriptor.getSkill().orElse(null) + "}";
 
         assertEquals(expected, editPersonDescriptor.toString());
     }

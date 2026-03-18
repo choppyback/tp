@@ -29,8 +29,8 @@ public class Person {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-            InjuryStatus injuryStatus, TrainingGoal trainingGoal,
-            Availability availability, Skill skill, ProgressRecord progressRecord) {
+                  InjuryStatus injuryStatus, TrainingGoal trainingGoal,
+                  Availability availability, ProgressRecord progressRecord, Skill skill) {
         requireAllNonNull(name, phone, email, address, trainingGoal, availability, skill);
         this.name = name;
         this.phone = phone;
@@ -38,30 +38,9 @@ public class Person {
         this.address = address;
         this.trainingGoal = trainingGoal;
         this.availability = availability;
+        this.progressRecord = progressRecord;
+        this.injuryStatus = injuryStatus;
         this.skill = skill;
-        this.progressRecord = progressRecord;
-        this.injuryStatus = injuryStatus;
-    }
-
-    /**
-     * Creates a {@code Person} without an explicit skill level.
-     * The skill level defaults to novice.
-     *
-     * This constructor is provided to support edit command.
-     */
-    public Person(Name name, Phone phone, Email email, Address address,
-            InjuryStatus injuryStatus, TrainingGoal trainingGoal,
-            Availability availability, ProgressRecord progressRecord) {
-        requireAllNonNull(name, phone, email, address, injuryStatus, trainingGoal, availability);
-        this.name = name;
-        this.phone = phone;
-        this.email = email;
-        this.address = address;
-        this.injuryStatus = injuryStatus;
-        this.trainingGoal = trainingGoal;
-        this.availability = availability;
-        this.skill = new Skill(Skill.SKILL_BEGINNER);
-        this.progressRecord = progressRecord;
     }
 
     public Name getName() {
@@ -99,7 +78,6 @@ public class Person {
     public ProgressRecord getProgressRecord() {
         return progressRecord;
     }
-
 
     /**
      * Returns true if both persons have the same name.
