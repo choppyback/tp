@@ -1,5 +1,12 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -14,6 +21,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -30,6 +38,7 @@ class JsonAdaptedPerson {
     private final String skill;
     private final String trainingGoal;
     private final String availability;
+    private final List<JsonAdaptedTimeslot> timeslots = new ArrayList<>();
     private String progressRecord;
 
     /**
@@ -40,6 +49,7 @@ class JsonAdaptedPerson {
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("injuryStatus") String injuryStatus,
             @JsonProperty("trainingGoal") String trainingGoal, @JsonProperty("availability") String availability,
+            @JsonProperty("timeslots") List<JsonAdaptedTimeslot> timeslots,
             @JsonProperty("skill") String skill, @JsonProperty("progressRecord") String progressRecord) {
         this.name = name;
         this.phone = phone;
@@ -48,6 +58,9 @@ class JsonAdaptedPerson {
         this.injuryStatus = injuryStatus;
         this.trainingGoal = trainingGoal;
         this.availability = availability;
+        if (timeslots != null) {
+            this.timeslots.addAll(timeslots);
+        }
         this.skill = skill;
         this.progressRecord = progressRecord;
     }
@@ -63,6 +76,9 @@ class JsonAdaptedPerson {
         injuryStatus = source.getInjuryStatus().value;
         trainingGoal = source.getTrainingGoal().value;
         availability = source.getAvailability().value;
+        timeslots.addAll(source.getTimeslots().stream()
+                .map(JsonAdaptedTimeslot::new)
+                .collect(Collectors.toList()));
         skill = source.getSkill().value;
         progressRecord = source.getProgressRecord().value;
     }
@@ -73,6 +89,11 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        final List<Timeslot> personTimeslots = new ArrayList<>();
+        for (JsonAdaptedTimeslot timeslot : timeslots) {
+            personTimeslots.add(timeslot.toModelType());
+        }
+
         if (name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
         }
@@ -149,8 +170,10 @@ class JsonAdaptedPerson {
             throw new IllegalValueException(ProgressRecord.MESSAGE_CONSTRAINTS);
         }
         final ProgressRecord modelProgressRecord = new ProgressRecord(progressRecord);
+
+        final Set<Timeslot> modelTimeslots = new TreeSet<>(personTimeslots);
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelInjuryStatus, modelTrainingGoal,
-                modelAvailability, modelProgressRecord, modelSkill);
+                modelAvailability, modelTimeslots, modelProgressRecord, modelSkill);
     }
 
 }

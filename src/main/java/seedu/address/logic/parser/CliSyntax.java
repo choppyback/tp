@@ -13,6 +13,7 @@ public class CliSyntax {
     public static final Prefix PREFIX_INJURY_STATUS = new Prefix("i/");
     public static final Prefix PREFIX_TRAINING_GOAL = new Prefix("t/");
     public static final Prefix PREFIX_AVAILABILITY = new Prefix("av/");
+    public static final Prefix PREFIX_TIMESLOT = new Prefix("ts/");
     public static final Prefix PREFIX_SKILL = new Prefix("s/");
     public static final Prefix PREFIX_PROGRESS_RECORD = new Prefix("pr/");
 

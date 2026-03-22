@@ -6,8 +6,6 @@ import static seedu.address.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import seedu.address.model.timeslot.Timeslot;
-
 public class TimeslotTest {
 
     @Test
@@ -51,21 +49,27 @@ public class TimeslotTest {
 
     @Test
     public void equals() {
-        Timeslot timeslot = new Timeslot("mon:0800-0900");
+        Timeslot timeslot1 = new Timeslot("mon:0800-0900");
+        Timeslot timeslot2 = new Timeslot("mon:2,4");
 
         // same values -> returns true
-        assertTrue(timeslot.equals(new Timeslot("mon:0800-0900")));
+        assertTrue(timeslot1.equals(new Timeslot("mon:0800-0900")));
+        assertTrue(timeslot2.equals(new Timeslot("mon:2,4")));
 
         // same object -> returns true
-        assertTrue(timeslot.equals(timeslot));
+        assertTrue(timeslot1.equals(timeslot1));
+        assertTrue(timeslot2.equals(timeslot2));
 
         // null -> returns false
-        assertFalse(timeslot.equals(null));
+        assertFalse(timeslot1.equals(null));
+        assertFalse(timeslot2.equals(null));
 
         // different types -> returns false
-        assertFalse(timeslot.equals(5.0f));
+        assertFalse(timeslot1.equals(5.0f));
+        assertFalse(timeslot2.equals(5.0f));
 
         // different values -> returns false
-        assertFalse(timeslot.equals(new Timeslot("tue:0900-1000")));
+        assertFalse(timeslot1.equals(new Timeslot("tue:0900-1000")));
+        assertFalse(timeslot1.equals(new Timeslot("mon:2,4,6")));
     }
 }

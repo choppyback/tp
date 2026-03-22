@@ -14,7 +14,16 @@ import java.util.TreeSet;
  * Guarantees: immutable; is valid as declared in {@link #isValidTimeslot(String)}
  */
 public class Timeslot implements Comparable<Timeslot> {
-    public static final String MESSAGE_CONSTRAINTS = "TODO";
+    public static final String MESSAGE_CONSTRAINTS = "Timeslot should be in the format "
+            + "day:start-end OR day:slotNumber separated by semicolons with no spaces.\n"
+            + "Example: mon:0900-1000,1200-1300;tue:9;wed:7\n"
+            + "- Days must be a 3-letter abbreviation (mon, tue, wed, thu, fri, sat, sun).\n"
+            + "- Days should not repeat.\n"
+            + "- Times must be in valid 24-hour format in the time range of 0800-2000 OR slot numbers from 1 to 12.\n"
+            + "- Multiple timings in a day must be separated by commas\n"
+            //+ "- Timings in a day should not be more than an hour\n"
+            //+ "- Start time must be strictly before the end time.\n"
+            + "- It cannot be left completely empty.";
     /*
      * Regex breakdown:
      * - Slot: matches 0800 to 2000 OR numbers 1-12
@@ -75,6 +84,17 @@ public class Timeslot implements Comparable<Timeslot> {
             slotStrings.add(s.toString());
         }
         return day + ": " + String.join(", ", slotStrings);
+    }
+
+    /**
+     * Returns a string representation of the timeslot, formatted for storage.
+     */
+    public String toStorageString() {
+        List<String> slotStrings = new ArrayList<>();
+        for (Slot s : slots) {
+            slotStrings.add(s.toString());
+        }
+        return day + ":" + String.join(",", slotStrings);
     }
 
     @Override

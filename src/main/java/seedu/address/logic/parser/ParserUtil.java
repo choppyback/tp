@@ -2,7 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
@@ -16,6 +20,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -95,6 +100,36 @@ public class ParserUtil {
             throw new ParseException(Availability.MESSAGE_CONSTRAINTS);
         }
         return new Availability(trimmedAvailability);
+    }
+
+    /**
+     * Parses a {@code String timeslot} into an {@code Timeslot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code timeslot} is invalid.
+     */
+    public static Timeslot parseTimeslot(String timeslot) throws ParseException {
+        requireNonNull(timeslot);
+        String trimmedTimeslot = timeslot.trim();
+        if (!Timeslot.isValidTimeslot(trimmedTimeslot)) {
+            throw new ParseException(Timeslot.MESSAGE_CONSTRAINTS);
+        }
+        return new Timeslot(trimmedTimeslot);
+    }
+
+    /**
+     * Parses {@code String timeslot} into an {@code Timeslot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code timeslot} is invalid.
+     */
+    public static Set<Timeslot> parseTimeslots(Collection<String> timeslots) throws ParseException {
+        requireNonNull(timeslots);
+        final Set<Timeslot> timeslotSet = new TreeSet<>();
+        for (String timeslot : timeslots) {
+            timeslotSet.add(parseTimeslot(timeslot));
+        }
+        return timeslotSet;
     }
 
     /**

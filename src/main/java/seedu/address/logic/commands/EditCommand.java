@@ -9,12 +9,17 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRESS_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
@@ -32,6 +37,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -49,6 +55,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
             + "[" + PREFIX_AVAILABILITY + "AVAILABILITY]"
+            + "[" + PREFIX_TIMESLOT + "TIMESLOT]"
             + "[" + PREFIX_TRAINING_GOAL + "TRAINING GOAL] "
             + "[" + PREFIX_PROGRESS_RECORD + "PROGRESS_RECORD] "
             + "[" + PREFIX_INJURY_STATUS + "INJURY_STATUS] "
@@ -114,14 +121,16 @@ public class EditCommand extends Command {
                                             .orElse(personToEdit.getTrainingGoal());
         Availability updatedAvailability = editPersonDescriptor.getAvailability()
                 .orElse(personToEdit.getAvailability());
+        Set<Timeslot> updatedTimeslots = editPersonDescriptor.getTimeslots()
+                .orElse(personToEdit.getTimeslots());
         ProgressRecord updatedProgressRecord = editPersonDescriptor.getProgressRecord()
                 .orElse(personToEdit.getProgressRecord());
         Skill updatedSkill = editPersonDescriptor.getSkill()
                 .orElse(personToEdit.getSkill());
 
         return new Person(updatedName, updatedPhone, updatedEmail,
-                updatedAddress, updatedInjuryStatus, updatedTrainingGoal, updatedAvailability, updatedProgressRecord,
-                updatedSkill);
+                updatedAddress, updatedInjuryStatus, updatedTrainingGoal, updatedAvailability, updatedTimeslots,
+                updatedProgressRecord, updatedSkill);
     }
 
     @Override
@@ -160,6 +169,7 @@ public class EditCommand extends Command {
         private InjuryStatus injuryStatus;
         private TrainingGoal trainingGoal;
         private Availability availability;
+        private Set<Timeslot> timeslots;
         private ProgressRecord progressRecord;
         private Skill skill;
 
@@ -177,6 +187,7 @@ public class EditCommand extends Command {
             setInjuryStatus(toCopy.injuryStatus);
             setTrainingGoal(toCopy.trainingGoal);
             setAvailability(toCopy.availability);
+            setTimeslots(toCopy.timeslots);
             setProgressRecord(toCopy.progressRecord);
             setSkill(toCopy.skill);
         }
@@ -186,7 +197,7 @@ public class EditCommand extends Command {
          */
         public boolean isAnyFieldEdited() {
             return CollectionUtil.isAnyNonNull(name, phone, email, address, injuryStatus,
-                    trainingGoal, availability, progressRecord, skill);
+                    trainingGoal, availability, timeslots, progressRecord, skill);
         }
 
         public void setName(Name name) {
@@ -245,6 +256,23 @@ public class EditCommand extends Command {
             return Optional.ofNullable(availability);
         }
 
+        /**
+         * Sets {@code timeslots} to this object's {@code timeslots}.
+         * A defensive copy of {@code timeslots} is used internally.
+         */
+        public void setTimeslots(Set<Timeslot> timeslots) {
+            this.timeslots = (timeslots != null) ? new TreeSet<>(timeslots) : null;
+        }
+
+        /**
+         * Returns an unmodifiable timeslot set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code timeslot} is null.
+         */
+        public Optional<Set<Timeslot>> getTimeslots() {
+            return (timeslots != null) ? Optional.of(Collections.unmodifiableSet(timeslots)) : Optional.empty();
+        }
+
         public void setProgressRecord(ProgressRecord progressRecord) {
             this.progressRecord = progressRecord;
         }
@@ -280,6 +308,7 @@ public class EditCommand extends Command {
                     && Objects.equals(injuryStatus, otherEditPersonDescriptor.injuryStatus)
                     && Objects.equals(trainingGoal, otherEditPersonDescriptor.trainingGoal)
                     && Objects.equals(availability, otherEditPersonDescriptor.availability)
+                    && Objects.equals(timeslots, otherEditPersonDescriptor.timeslots)
                     && Objects.equals(progressRecord, otherEditPersonDescriptor.progressRecord)
                     && Objects.equals(skill, otherEditPersonDescriptor.skill);
         }
@@ -294,6 +323,7 @@ public class EditCommand extends Command {
                     .add("injuryStatus", injuryStatus)
                     .add("trainingGoal", trainingGoal)
                     .add("availability", availability)
+                    .add("timeslots", timeslots)
                     .add("progressRecord", progressRecord)
                     .add("skill", skill)
                     .toString();
