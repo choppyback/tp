@@ -14,12 +14,8 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
      * Validates that data is a percentage.
      * Example: 5%, 0.001%, 100%
      */
-    public static final String PERCENTAGE_REGEX = "^((100((\\.|,)[0-9]{1,2})?)|([0-9]{1,2}((\\.|,)[0-9]{0,2})?))%$";
-    /**
-     * Fraction regex
-     */
-    public static final String FRACTION_REGEX = "^\\d+\\/\\d+$";
-    public static final String VALIDATION_REGEX = PERCENTAGE_REGEX + "|" + FRACTION_REGEX;
+    public static final String PERCENTAGE_REGEX = "^(100|[1-9]?[0-9])%$";
+    public static final String VALIDATION_REGEX = PERCENTAGE_REGEX;
 
     public final String value;
     /**
@@ -30,6 +26,8 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
     public ProgressRecord(String progress) {
         requireNonNull(progress);
         checkArgument(isValidProgress(progress), MESSAGE_CONSTRAINTS);
+        int numericValue = parseToPercentage(progress);
+        assert numericValue > 0 && numericValue <= 100;
         value = progress;
     }
 
@@ -39,35 +37,14 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
     public static boolean isValidProgress(String test) {
         requireNonNull(test);
         // 1. Check if it matches the general format first
-        if (!test.matches(VALIDATION_REGEX)) {
-            return false;
-        }
-
-        // 2. Convert to numeric value and check the 100% boundary
-        try {
-            double numericValue = parseToPercentage(test);
-            return numericValue >= 0 && numericValue <= 100;
-        } catch (ArithmeticException e) {
-            return false;
-        }
+        return test.matches(VALIDATION_REGEX);
     }
 
     /**
-     * Helper to convert both "50%" and "1/2" formats into a double percentage value.
+     * Helper to convert "50%"  into a integer percentage value.
      */
-    static double parseToPercentage(String s) {
-        if (s.contains("%")) {
-            return Double.parseDouble(s.replace("%", "").replace(",", "."));
-        } else if (s.contains("/")) {
-            String[] parts = s.split("/");
-            double numerator = Double.parseDouble(parts[0]);
-            double denominator = Double.parseDouble(parts[1]);
-            if (denominator == 0) {
-                throw new ArithmeticException("Division by zero");
-            }
-            return (numerator / denominator) * 100;
-        }
-        return Double.parseDouble(s);
+    static int parseToPercentage(String s) {
+        return Integer.parseInt(s.replace("%", ""));
     }
     @Override
     public String toString() {
@@ -104,8 +81,8 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
             return 0;
         }
         ProgressRecord otherProgress = (ProgressRecord) other;
-        double thisValue = parseToPercentage(value);
-        double otherValue = parseToPercentage(otherProgress.value);
+        int thisValue = parseToPercentage(value);
+        int otherValue = parseToPercentage(otherProgress.value);
         if (thisValue < otherValue) {
             return -1;
         } else if (thisValue > otherValue) {
