@@ -50,6 +50,14 @@ public class UiManager implements Ui {
         }
     }
 
+    @Override
+    public void showStartupErrorMessage(String message) {
+        if (message == null || message.isBlank()) {
+            return;
+        }
+        mainWindow.showStartupMessage(message);
+    }
+
     private Image getImage(String imagePath) {
         return new Image(MainApp.class.getResourceAsStream(imagePath));
     }

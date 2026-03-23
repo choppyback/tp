@@ -45,6 +45,7 @@ public class MainApp extends Application {
     protected Storage storage;
     protected Model model;
     protected Config config;
+    private String startupErrorMessage;
 
     @Override
     public void init() throws Exception {
@@ -85,8 +86,9 @@ public class MainApp extends Application {
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
-            logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
-                    + " Will be starting with an empty AddressBook.");
+            String message = createDataLoadErrorMessage(storage.getAddressBookFilePath(), e);
+            logger.warning(message);
+            startupErrorMessage = message;
             initialData = new AddressBook();
         }
 
@@ -172,6 +174,9 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+        if (startupErrorMessage != null) {
+            ui.showStartupErrorMessage(startupErrorMessage);
+        }
     }
 
     @Override
@@ -182,5 +187,14 @@ public class MainApp extends Application {
         } catch (IOException e) {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
+    }
+
+    /**
+     * Builds the startup error message that explains which data file failed to load
+     * and includes the exception details of the error
+     */
+    private String createDataLoadErrorMessage(Path dataFilePath, DataLoadingException e) {
+        return "Data file at " + dataFilePath + " could not be loaded."
+                + " Will be starting with an empty AddressBook.\n" + "Error: " + StringUtil.getDetails(e);
     }
 }
