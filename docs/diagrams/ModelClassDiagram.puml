@@ -18,7 +18,8 @@ Class Address
 Class Email
 Class Name
 Class Phone
-Class Tag
+Class TrainingGoal
+Class FilteredSkill
 
 Class I #FFFFFF
 }
@@ -41,7 +42,8 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
-Person *--> "*" Tag
+Person *--> TrainingGoal
+Person *--> "0..1" FilteredSkill
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
