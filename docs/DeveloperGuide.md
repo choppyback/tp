@@ -519,6 +519,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Duplicate clients**: 2 Clients with the same phone number
 
+* **Timeslot**: A field in a client which represents the timeslot allocated for training by the trainer
+
 *{More to be added}*
 
 --------------------------------------------------------------------------------------------------------------------
