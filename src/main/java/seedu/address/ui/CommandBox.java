@@ -3,6 +3,8 @@ package seedu.address.ui;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -17,7 +19,7 @@ public class CommandBox extends UiPart<Region> {
     private static final String FXML = "CommandBox.fxml";
 
     private final CommandExecutor commandExecutor;
-
+    private final CommandHistory commandHistory = new CommandHistory();
     @FXML
     private TextField commandTextField;
 
@@ -29,8 +31,26 @@ public class CommandBox extends UiPart<Region> {
         this.commandExecutor = commandExecutor;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        commandTextField.setOnKeyPressed(e -> {
+            handleNavigate(e);
+        });
     }
 
+    @FXML
+    private void handleNavigate(KeyEvent key) {
+        KeyCode code = key.getCode();
+        String commandFromHistory;
+        if (code == KeyCode.UP) {
+            commandFromHistory = commandHistory.navigateUp();
+        } else if (code == KeyCode.DOWN) {
+            commandFromHistory = commandHistory.navigateDown();
+        } else {
+            return;
+        }
+        commandTextField.setText(commandFromHistory);
+        commandTextField.positionCaret(commandFromHistory.length());
+        commandTextField.requestFocus();
+    }
     /**
      * Handles the Enter button pressed event.
      */
@@ -40,6 +60,7 @@ public class CommandBox extends UiPart<Region> {
         if (commandText.equals("")) {
             return;
         }
+        commandHistory.addCommand(commandText);
 
         try {
             commandExecutor.execute(commandText);
