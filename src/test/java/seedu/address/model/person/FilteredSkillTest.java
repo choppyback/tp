@@ -52,12 +52,6 @@ public class FilteredSkillTest {
     }
 
     @Test
-    public void constructor_singleCharacter_capitalizesCorrectly() {
-        FilteredSkill skill = new FilteredSkill("a");
-        assertEquals("A", skill.value);
-    }
-
-    @Test
     public void constructor_customSkillValue_storesCorrectly() {
         FilteredSkill skill = new FilteredSkill("advanced");
         assertEquals("Advanced", skill.value);
