@@ -12,10 +12,9 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
     public static final String DEFAULT_PROGRESS = "0%";
     /**
      * Validates that data is a percentage.
-     * Example: 5%, 0.001%, 100%
+     * Example: 5%, 0%, 100%
      */
-    public static final String PERCENTAGE_REGEX = "^(100|[1-9]?[0-9])%$";
-    public static final String VALIDATION_REGEX = PERCENTAGE_REGEX;
+    public static final String VALIDATION_REGEX = "^(100|[1-9]?[0-9])%$";
 
     public final String value;
     /**
@@ -27,7 +26,7 @@ public class ProgressRecord implements Comparable<ProgressRecord> {
         requireNonNull(progress);
         checkArgument(isValidProgress(progress), MESSAGE_CONSTRAINTS);
         int numericValue = parseToPercentage(progress);
-        assert numericValue > 0 && numericValue <= 100;
+        assert numericValue >= 0 && numericValue <= 100;
         value = progress;
     }
 
