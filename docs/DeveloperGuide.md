@@ -504,6 +504,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   - Contact Number  
   - Address  
   - Availability  
+  - Timeslot
   - Training Goals  
   - Skill Level*  
   - Progress Record*  
@@ -518,6 +519,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Trainer**: The user of the program
 
 * **Duplicate clients**: 2 Clients with the same phone number
+
+* **Timeslot**: A field in a client which represents the timeslot allocated for training by the trainer
 
 *{More to be added}*
 
