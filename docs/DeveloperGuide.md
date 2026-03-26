@@ -541,8 +541,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Personal Particulars**: The set of information stored for each client, including:
   - Name  
   - Contact Number  
-  - Address  
-  - Availability  
+  - Address   
   - Timeslot
   - Training Goals  
   - Skill Level*  
