@@ -378,12 +378,6 @@
     -fx-background-color: white; /* #3e4450; */
 }
 
-.list-cell .availability_label {
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-font-size: 13px;
-    -fx-text-fill: #0e9af3;
-}
-
 .list-cell .trainingGoal_label {
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 13px;
@@ -400,4 +394,14 @@
     -fx-font-family: "Segoe UI Semibold";
     -fx-font-size: 13px;
     -fx-text-fill: darkorange;
+}
+
+.timeslot-label {
+    -fx-background-color: #2e8b57;
+    -fx-padding: 2 5 2 5;
+    -fx-border-radius: 4;
+    -fx-background-radius: 4;
+    -fx-font-size: 11pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: white;
 }

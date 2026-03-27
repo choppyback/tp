@@ -1,11 +1,16 @@
 package seedu.address.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
+
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Availability;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.InjuryStatus;
 import seedu.address.model.person.Name;
@@ -14,6 +19,7 @@ import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -26,11 +32,11 @@ class JsonAdaptedPerson {
     private final String phone;
     private final String email;
     private final String address;
-    private final String availability;
-    private final String trainingGoal;
-    private String progressRecord;
     private final String injuryStatus;
     private final String skill;
+    private final String trainingGoal;
+    private final List<JsonAdaptedTimeslot> timeslots = new ArrayList<>();
+    private String progressRecord;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -38,18 +44,21 @@ class JsonAdaptedPerson {
     @JsonCreator
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
-            @JsonProperty("availability") String availability, @JsonProperty("trainingGoal") String trainingGoal,
-            @JsonProperty("progressRecord") String progressRecord, @JsonProperty("injuryStatus") String injuryStatus,
-            @JsonProperty("skill") String skill) {
+            @JsonProperty("injuryStatus") String injuryStatus,
+            @JsonProperty("trainingGoal") String trainingGoal,
+            @JsonProperty("timeslots") List<JsonAdaptedTimeslot> timeslots,
+            @JsonProperty("skill") String skill, @JsonProperty("progressRecord") String progressRecord) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        this.availability = availability;
-        this.trainingGoal = trainingGoal;
-        this.progressRecord = progressRecord;
         this.injuryStatus = injuryStatus;
+        this.trainingGoal = trainingGoal;
+        if (timeslots != null) {
+            this.timeslots.addAll(timeslots);
+        }
         this.skill = skill;
+        this.progressRecord = progressRecord;
     }
 
     /**
@@ -60,11 +69,13 @@ class JsonAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        availability = source.getAvailability().value;
-        trainingGoal = source.getTrainingGoal().value;
-        progressRecord = source.getProgressRecord().value;
         injuryStatus = source.getInjuryStatus().value;
+        trainingGoal = source.getTrainingGoal().value;
+        timeslots.addAll(source.getTimeslots().stream()
+                .map(JsonAdaptedTimeslot::new)
+                .collect(Collectors.toList()));
         skill = source.getSkill().value;
+        progressRecord = source.getProgressRecord().value;
     }
 
     /**
@@ -73,18 +84,23 @@ class JsonAdaptedPerson {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person.
      */
     public Person toModelType() throws IllegalValueException {
+        final List<Timeslot> personTimeslots = new ArrayList<>();
+        for (JsonAdaptedTimeslot timeslot : timeslots) {
+            personTimeslots.add(timeslot.toModelType());
+        }
+
         Name modelName = toModelName();
         Phone modelPhone = toModelPhone();
         Email modelEmail = toModelEmail();
         Address modelAddress = toModelAddress();
-        Availability modelAvailability = toModelAvailability();
+        final Set<Timeslot> modelTimeslots = new TreeSet<>(personTimeslots);
         TrainingGoal modelTrainingGoal = toModelTrainingGoal();
         ProgressRecord modelProgressRecord = toModelProgressRecord();
         InjuryStatus modelInjuryStatus = toModelInjuryStatus();
         Skill modelSkill = toModelSkill();
 
         return new Person(modelName, modelPhone, modelEmail, modelAddress, modelInjuryStatus, modelTrainingGoal,
-                modelAvailability, modelProgressRecord, modelSkill);
+                modelTimeslots, modelProgressRecord, modelSkill);
     }
 
     /**
@@ -149,23 +165,6 @@ class JsonAdaptedPerson {
                     Address.MESSAGE_CONSTRAINTS, address));
         }
         return new Address(address);
-    }
-
-    /**
-     * Converts the stored availability string to a model {@code Availability} validating format.
-     *
-     * @throws IllegalValueException if availability is missing or invalid.
-     */
-    private Availability toModelAvailability() throws IllegalValueException {
-        if (availability == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                    Availability.class.getSimpleName()));
-        }
-        if (!Availability.isValidAvailability(availability)) {
-            throw new IllegalValueException(formatInvalidFieldMessage(Availability.class.getSimpleName(),
-                    Availability.MESSAGE_CONSTRAINTS, availability));
-        }
-        return new Availability(availability);
     }
 
     /**

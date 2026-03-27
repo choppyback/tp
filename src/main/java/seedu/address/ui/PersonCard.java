@@ -2,6 +2,7 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
@@ -35,7 +36,7 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label address;
     @FXML
-    private Label availability;
+    private FlowPane timeslots;
     @FXML
     private Label trainingGoal;
     @FXML
@@ -57,11 +58,16 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        availability.setText(person.getAvailability().value);
         trainingGoal.setText("Goal: " + person.getTrainingGoal().value);
         email.setText(person.getEmail().value);
         injuryStatus.setText(person.getInjuryStatus().value);
         progressRecord.setText("Progress: " + person.getProgressRecord().value);
+        person.getTimeslots().stream().sorted()
+                .forEach(timeslot -> {
+                    Label timeslotLabel = new Label(timeslot.toString());
+                    timeslotLabel.getStyleClass().add("timeslot-label");
+                    timeslots.getChildren().add(timeslotLabel);
+                });
 
         // Customised style for skill
         String skillLevel = person.getSkill().value;

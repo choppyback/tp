@@ -5,6 +5,6 @@
     "email": "invalid@email!3e",
     "address": "4th street",
     "trainingGoal": "4 pushups",
-    "availability": "mon: 0900-1000"
+    "timeslots" : ["MON:0800-0900"]
   } ]
 }

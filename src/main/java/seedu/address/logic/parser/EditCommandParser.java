@@ -3,19 +3,25 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRESS_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
+
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Parses input arguments and creates a new EditCommand object
@@ -32,7 +38,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
                     PREFIX_ADDRESS, PREFIX_INJURY_STATUS, PREFIX_TRAINING_GOAL,
-                    PREFIX_AVAILABILITY, PREFIX_PROGRESS_RECORD, PREFIX_SKILL);
+                    PREFIX_TIMESLOT, PREFIX_PROGRESS_RECORD, PREFIX_SKILL);
         Index index;
 
         try {
@@ -42,7 +48,8 @@ public class EditCommandParser implements Parser<EditCommand> {
         }
 
         argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
-                PREFIX_TRAINING_GOAL, PREFIX_AVAILABILITY, PREFIX_PROGRESS_RECORD, PREFIX_INJURY_STATUS, PREFIX_SKILL);
+                PREFIX_TRAINING_GOAL, PREFIX_TIMESLOT,
+                PREFIX_PROGRESS_RECORD, PREFIX_INJURY_STATUS, PREFIX_SKILL);
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
 
@@ -67,10 +74,6 @@ public class EditCommandParser implements Parser<EditCommand> {
             editPersonDescriptor.setTrainingGoal(ParserUtil
                     .parseTrainingGoal(argMultimap.getValue(PREFIX_TRAINING_GOAL).get()));
         }
-        if (argMultimap.getValue(PREFIX_AVAILABILITY).isPresent()) {
-            editPersonDescriptor.setAvailability(ParserUtil.parseAvailability(argMultimap.getValue(PREFIX_AVAILABILITY)
-                    .get()));
-        }
         if (argMultimap.getValue(PREFIX_PROGRESS_RECORD).isPresent()) {
             editPersonDescriptor.setProgressRecord(ParserUtil.parseProgressRecord(
                     argMultimap.getValue(PREFIX_PROGRESS_RECORD).get()));
@@ -78,12 +81,29 @@ public class EditCommandParser implements Parser<EditCommand> {
         if (argMultimap.getValue(PREFIX_SKILL).isPresent()) {
             editPersonDescriptor.setSkill(ParserUtil.parseSkill(argMultimap.getValue(PREFIX_SKILL)));
         }
+        parseTimeslotsForEdit(argMultimap.getAllValues(PREFIX_TIMESLOT)).ifPresent(editPersonDescriptor::setTimeslots);
 
         if (!editPersonDescriptor.isAnyFieldEdited()) {
             throw new ParseException(EditCommand.MESSAGE_NOT_EDITED);
         }
 
         return new EditCommand(index, editPersonDescriptor);
+    }
+
+    /**
+     * Parses {@code Collection<String> timeslots} into a {@code Set<Timeslot>} if {@code timeslots} is non-empty.
+     * If {@code timeslots} contain only one element which is an empty string, it will be parsed into a
+     * {@code Set<Timeslot>} containing zero timeslots.
+     */
+    private Optional<Set<Timeslot>> parseTimeslotsForEdit(Collection<String> timeslots) throws ParseException {
+        assert timeslots != null;
+
+        if (timeslots.isEmpty()) {
+            return Optional.empty();
+        }
+        Collection<String> timeslotSet = timeslots.size() == 1 && timeslots.contains("")
+                ? Collections.emptySet() : timeslots;
+        return Optional.of(ParserUtil.parseTimeslots(timeslotSet));
     }
 
 }

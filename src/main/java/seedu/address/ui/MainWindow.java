@@ -1,5 +1,7 @@
 package seedu.address.ui;
 
+import static java.util.Objects.requireNonNull;
+
 import java.util.logging.Logger;
 
 import javafx.event.ActionEvent;
@@ -149,6 +151,15 @@ public class MainWindow extends UiPart<Stage> {
 
     void show() {
         primaryStage.show();
+    }
+
+    /**
+     * Displays {@code message} in the result display area so the user sees
+     * startup-related information immediately after the window is ready.
+     */
+    void showStartupMessage(String message) {
+        requireNonNull(message);
+        resultDisplay.setFeedbackToUser(message);
     }
 
     /**

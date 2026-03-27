@@ -27,6 +27,8 @@ public class AddressTest {
         // invalid addresses
         assertFalse(Address.isValidAddress("")); // empty string
         assertFalse(Address.isValidAddress(" ")); // spaces only
+        assertFalse(Address.isValidAddress("Blk 67, NUS x/execute malware")); // flag-like within address
+        assertFalse(Address.isValidAddress("Blk 67, NUS xx/execute malware")); // flag-like within address
 
         // valid addresses
         assertTrue(Address.isValidAddress("Blk 456, Den Road, #01-355"));

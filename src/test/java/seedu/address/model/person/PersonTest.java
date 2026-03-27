@@ -4,13 +4,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_AVAILABILITY_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PROGRESS_RECORD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TIMESLOT_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAINING_GOAL_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TRAINING_GOAL_BOB;
 import static seedu.address.testutil.TypicalPersons.ALICE;
@@ -32,7 +32,8 @@ public class PersonTest {
         // same phone, all other attributes different -> returns true
         Person editedAlice = new PersonBuilder(ALICE).withName(VALID_NAME_BOB).withEmail(VALID_EMAIL_BOB)
                 .withAddress(VALID_ADDRESS_BOB).withTrainingGoal(VALID_TRAINING_GOAL_BOB)
-                .withAvailability(VALID_AVAILABILITY_BOB).build();
+                .withTimeslots(VALID_TIMESLOT_BOB)
+                .build();
         assertTrue(ALICE.isSamePerson(editedAlice));
 
         // different phone, all other attributes same -> returns false
@@ -84,11 +85,11 @@ public class PersonTest {
         editedAlice = new PersonBuilder(ALICE).withAddress(VALID_ADDRESS_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different availability -> returns false
-        editedAlice = new PersonBuilder(ALICE).withAddress(VALID_AVAILABILITY_BOB).build();
+        // different timeslot -> returns false
+        editedAlice = new PersonBuilder(ALICE).withAddress(VALID_TIMESLOT_BOB).build();
         assertFalse(ALICE.equals(editedAlice));
 
-        // different tags -> returns false
+        // different training goal -> returns false
         editedAlice = new PersonBuilder(ALICE).withTrainingGoal(VALID_TRAINING_GOAL_AMY).build();
         assertFalse(ALICE.equals(editedAlice));
 
@@ -102,7 +103,7 @@ public class PersonTest {
         String expected = Person.class.getCanonicalName() + "{name=" + ALICE.getName() + ", phone=" + ALICE.getPhone()
                 + ", email=" + ALICE.getEmail() + ", address=" + ALICE.getAddress()
                 + ", injuryStatus=" + ALICE.getInjuryStatus() + ", trainingGoal=" + ALICE.getTrainingGoal()
-                + ", availability=" + ALICE.getAvailability()
+                + ", timeslots=" + ALICE.getTimeslots()
                 + ", skill=" + ALICE.getSkill()
                 + ", progressRecord=" + ALICE.getProgressRecord() + "}";
         assertEquals(expected, ALICE.toString());

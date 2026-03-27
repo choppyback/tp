@@ -1,16 +1,21 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAILABILITY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURY_STATUS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRESS_RECORD;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SKILL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMESLOT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TRAINING_GOAL;
+
+import java.util.Set;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Person;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * A utility class for Person.
@@ -34,7 +39,9 @@ public class PersonUtil {
         sb.append(PREFIX_EMAIL + person.getEmail().value + " ");
         sb.append(PREFIX_ADDRESS + person.getAddress().value + " ");
         sb.append(PREFIX_TRAINING_GOAL + person.getTrainingGoal().value + " ");
-        sb.append(PREFIX_AVAILABILITY + person.getAvailability().value + " ");
+        person.getTimeslots().stream().forEach(
+                t -> sb.append(PREFIX_TIMESLOT + t.toStorageString() + " ")
+        );
         sb.append(PREFIX_SKILL + person.getSkill().value + " ");
 
         return sb.toString();
@@ -52,9 +59,19 @@ public class PersonUtil {
                                                     .append(address.value).append(" "));
         descriptor.getTrainingGoal().ifPresent(trainingGoal -> sb.append(PREFIX_TRAINING_GOAL)
                                                     .append(trainingGoal.value).append(" "));
-        descriptor.getAvailability().ifPresent(avail -> sb.append(PREFIX_AVAILABILITY)
-                                                    .append(avail.value).append(" "));
         descriptor.getSkill().ifPresent(skill -> sb.append(PREFIX_SKILL).append(skill.value).append(" "));
+        descriptor.getProgressRecord().ifPresent(progressRecord -> sb.append(PREFIX_PROGRESS_RECORD)
+                .append(progressRecord.value).append(" "));
+        descriptor.getInjuryStatus().ifPresent(injury -> sb.append(PREFIX_INJURY_STATUS)
+                .append(injury.value).append(" "));
+        if (descriptor.getTimeslots().isPresent()) {
+            Set<Timeslot> timeslots = descriptor.getTimeslots().get();
+            if (timeslots.isEmpty()) {
+                sb.append(PREFIX_TIMESLOT);
+            } else {
+                timeslots.forEach(s -> sb.append(PREFIX_TIMESLOT).append(s.toStorageString()).append(" "));
+            }
+        }
         return sb.toString();
     }
 }

@@ -47,8 +47,6 @@ public class Messages {
                 .append(person.getInjuryStatus())
                 .append("; Training Goal: ")
                 .append(person.getTrainingGoal())
-                .append("; Availability: ")
-                .append(person.getAvailability())
                 .append("; Skill: ")
                 .append(person.getSkill())
                 .append("; Progress: ")

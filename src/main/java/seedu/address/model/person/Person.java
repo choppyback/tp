@@ -2,9 +2,12 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Set;
 
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Represents a Person in the address book.
@@ -21,7 +24,7 @@ public class Person {
     private final Address address;
     private final InjuryStatus injuryStatus;
     private final TrainingGoal trainingGoal;
-    private final Availability availability;
+    private final Set<Timeslot> timeslots;
     private final Skill skill;
     private final ProgressRecord progressRecord;
 
@@ -30,14 +33,14 @@ public class Person {
      */
     public Person(Name name, Phone phone, Email email, Address address,
                   InjuryStatus injuryStatus, TrainingGoal trainingGoal,
-                  Availability availability, ProgressRecord progressRecord, Skill skill) {
-        requireAllNonNull(name, phone, email, address, trainingGoal, availability, skill);
+                  Set<Timeslot> timeslots, ProgressRecord progressRecord, Skill skill) {
+        requireAllNonNull(name, phone, email, address, trainingGoal, skill);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.trainingGoal = trainingGoal;
-        this.availability = availability;
+        this.timeslots = timeslots;
         this.progressRecord = progressRecord;
         this.injuryStatus = injuryStatus;
         this.skill = skill;
@@ -67,8 +70,8 @@ public class Person {
         return trainingGoal;
     }
 
-    public Availability getAvailability() {
-        return availability;
+    public Set<Timeslot> getTimeslots() {
+        return Collections.unmodifiableSet(timeslots);
     }
 
     public Skill getSkill() {
@@ -114,7 +117,7 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && injuryStatus.equals(otherPerson.injuryStatus)
                 && trainingGoal.equals(otherPerson.trainingGoal)
-                && availability.equals(otherPerson.availability)
+                && timeslots.equals(otherPerson.timeslots)
                 && skill.equals(otherPerson.skill)
                 && progressRecord.equals(otherPerson.progressRecord);
     }
@@ -123,7 +126,7 @@ public class Person {
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(name, phone, email, address, injuryStatus,
-            trainingGoal, availability, skill, progressRecord);
+            trainingGoal, timeslots, skill, progressRecord);
     }
 
     @Override
@@ -135,7 +138,7 @@ public class Person {
                 .add("address", address)
                 .add("injuryStatus", injuryStatus)
                 .add("trainingGoal", trainingGoal)
-                .add("availability", availability)
+                .add("timeslots", timeslots)
                 .add("skill", skill)
                 .add("progressRecord", progressRecord)
                 .toString();

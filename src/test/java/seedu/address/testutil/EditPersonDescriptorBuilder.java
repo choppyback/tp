@@ -1,14 +1,18 @@
 package seedu.address.testutil;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Availability;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * A utility class to help with building EditPersonDescriptor objects.
@@ -35,7 +39,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTrainingGoal(person.getTrainingGoal());
-        descriptor.setAvailability(person.getAvailability());
+        descriptor.setTimeslots(person.getTimeslots());
         descriptor.setSkill(person.getSkill());
     }
 
@@ -72,10 +76,12 @@ public class EditPersonDescriptorBuilder {
     }
 
     /**
-     * Sets the {@code Availability} of the {@code EditPersonDescriptor} that we are building.
+     * Parses the {@code timeslots} into a {@code Set<Timeslot>} and set it to the {@code EditPersonDescriptor}
+     * that we are building.
      */
-    public EditPersonDescriptorBuilder withAvailability(String availability) {
-        descriptor.setAvailability(new Availability(availability));
+    public EditPersonDescriptorBuilder withTimeslots(String... timeslots) {
+        Set<Timeslot> timeslotSet = Stream.of(timeslots).map(Timeslot::new).collect(Collectors.toSet());
+        descriptor.setTimeslots(timeslotSet);
         return this;
     }
 

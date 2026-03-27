@@ -2,20 +2,24 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
+import java.util.TreeSet;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Address;
-import seedu.address.model.person.Availability;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.FilteredSkill;
 import seedu.address.model.person.InjuryStatus;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.ProgressRecord;
 import seedu.address.model.person.Skill;
 import seedu.address.model.person.TrainingGoal;
+import seedu.address.model.timeslot.Timeslot;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -83,18 +87,35 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String availability} into an {@code Availability}.
+     * Parses a {@code String timeslot} into an {@code Timeslot}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws ParseException if the given {@code availability} is invalid.
+     * @throws ParseException if the given {@code timeslot} is invalid.
      */
-    public static Availability parseAvailability(String availability) throws ParseException {
-        requireNonNull(availability);
-        String trimmedAvailability = availability.trim();
-        if (!Availability.isValidAvailability(trimmedAvailability)) {
-            throw new ParseException(Availability.MESSAGE_CONSTRAINTS);
+    public static Timeslot parseTimeslot(String timeslot) throws ParseException {
+        requireNonNull(timeslot);
+        String trimmedTimeslot = timeslot.trim();
+        if (!Timeslot.isValidTimeslot(trimmedTimeslot)) {
+            throw new ParseException(Timeslot.MESSAGE_CONSTRAINTS);
         }
-        return new Availability(trimmedAvailability);
+        return new Timeslot(trimmedTimeslot);
+    }
+
+    /**
+     * Parses {@code String timeslot} into an {@code Timeslot}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws ParseException if the given {@code timeslot} is invalid.
+     */
+    public static Set<Timeslot> parseTimeslots(Collection<String> timeslots) throws ParseException {
+        requireNonNull(timeslots);
+        final Set<Timeslot> timeslotSet = new TreeSet<>();
+        for (String timeslot : timeslots) {
+            for (String dayTimeslot : timeslot.split(";")) {
+                timeslotSet.add(parseTimeslot(dayTimeslot));
+            }
+        }
+        return timeslotSet;
     }
 
     /**
@@ -162,6 +183,27 @@ public class ParserUtil {
         }
         return new Skill(trimmedSkill);
     }
+
+    /**
+     * Parses a {@code String skill} into a {@code FilteredSkill}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @param skill the skill string to parse; must not be null
+     * @return a {@code FilteredSkill} representing the parsed skill
+     * @throws NullPointerException if {@code skill} is null
+     * @throws ParseException if the given {@code skill} does not satisfy
+     *         {@link FilteredSkill#isValidFilteredSkill(String)}
+     */
+    public static FilteredSkill parseFilteredSkill(String skill) throws ParseException {
+        requireNonNull(skill);
+
+        String trimmedSkill = skill.trim();
+        if (!FilteredSkill.isValidFilteredSkill(trimmedSkill)) {
+            throw new ParseException(FilteredSkill.MESSAGE_CONSTRAINTS);
+        }
+        return new FilteredSkill(trimmedSkill);
+    }
+
     /**
      * Parses a {@code String Progress Record} into an {@code ProgressRecord}.
      * Leading and trailing whitespaces will be trimmed.

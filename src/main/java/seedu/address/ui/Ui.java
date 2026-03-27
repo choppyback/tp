@@ -10,4 +10,7 @@ public interface Ui {
     /** Starts the UI (and the App).  */
     void start(Stage primaryStage);
 
+    /** Displays a non-fatal message collected during initialization. */
+    void showStartupErrorMessage(String message);
+
 }

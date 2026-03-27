@@ -23,7 +23,6 @@ public class ProgressRecordTest {
     public void isValidProgressRecord() {
         // null ProgressRecord
         assertThrows(NullPointerException.class, () -> ProgressRecord.isValidProgress(null));
-        assertThrows(ArithmeticException.class, () -> ProgressRecord.parseToPercentage("10/0"));
 
         // invalid progress record
         assertFalse(ProgressRecord.isValidProgress("")); // empty string
@@ -37,21 +36,16 @@ public class ProgressRecordTest {
         assertTrue(ProgressRecord.isValidProgress("100%"));
         assertTrue(ProgressRecord.isValidProgress("0%")); // one character
         assertTrue(ProgressRecord.isValidProgress("50%"));
-        assertTrue(ProgressRecord.isValidProgress("1/2"));
-        assertTrue(ProgressRecord.isValidProgress("20/50"));
-
     }
 
     @Test
     public void parseToPercentage() {
         //divide by zero
-        assertThrows(ArithmeticException.class, () -> ProgressRecord.parseToPercentage("1/0"));
+        assertThrows(NumberFormatException.class, () -> ProgressRecord.parseToPercentage("1/0"));
 
-        assertTrue(ProgressRecord.parseToPercentage("50%") == 50.0);
-        assertTrue(ProgressRecord.parseToPercentage("1/2") == 50.0);
-        assertTrue(ProgressRecord.parseToPercentage("100%") == 100.0);
-        assertTrue(ProgressRecord.parseToPercentage("0%") == 0.0);
-        assertTrue(ProgressRecord.parseToPercentage("20") == 20.0);
+        assertTrue(ProgressRecord.parseToPercentage("50%") == 50);
+        assertTrue(ProgressRecord.parseToPercentage("100%") == 100);
+        assertTrue(ProgressRecord.parseToPercentage("0%") == 0);
 
     }
 

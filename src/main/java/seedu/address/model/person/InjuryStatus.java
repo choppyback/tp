@@ -10,9 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class InjuryStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Injury status should not be blank.";
+            "Injury status should not be blank and should not contain flag-like patterns (e.g. 'x/', 'ab/').";
 
-    public static final String VALIDATION_REGEX = "[^\\s].*";
+    public static final String VALIDATION_REGEX = "(?!.*\\b[a-zA-Z]{1,2}/)[^\\s].*";
 
     public static final String DEFAULT_INJURY_STATUS = "Unknown";
 

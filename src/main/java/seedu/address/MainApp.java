@@ -12,6 +12,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.exceptions.DataLoadingException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.StartupErrorMessage;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -45,6 +46,7 @@ public class MainApp extends Application {
     protected Storage storage;
     protected Model model;
     protected Config config;
+    private String startupErrorMessage;
 
     @Override
     public void init() throws Exception {
@@ -85,8 +87,10 @@ public class MainApp extends Application {
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataLoadingException e) {
+            String userMessage = StartupErrorMessage.build(storage.getAddressBookFilePath(), e);
             logger.warning("Data file at " + storage.getAddressBookFilePath() + " could not be loaded."
                     + " Will be starting with an empty AddressBook.");
+            startupErrorMessage = userMessage;
             initialData = new AddressBook();
         }
 
@@ -172,6 +176,9 @@ public class MainApp extends Application {
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
         ui.start(primaryStage);
+        if (startupErrorMessage != null) {
+            ui.showStartupErrorMessage(startupErrorMessage);
+        }
     }
 
     @Override
