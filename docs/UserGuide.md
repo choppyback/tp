@@ -127,6 +127,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ts/TIMESLOT t/TRAINING_GOAL
 * Represents the fitness or performance goal of the client (e.g. `run 50km`, `lift 100kg`)
 * Accepts any alphanumeric characters and spaces
 * Cannot be blank
+* The max length for the training goal is 200 characters
 * This field is mandatory — every client must have a training goal specified
 
 **Progress Record (`pr/`):**
@@ -217,6 +218,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TR
 * Represents the fitness or performance goal of the client (e.g. `run 50km`, `lift 100kg`)
 * Accepts any alphanumeric characters and spaces
 * Cannot be blank
+* The max length for the training goal is 200 characters
 
 **Progress Record (`pr/`):**
 * Represents the client’s training progress as a percentage (e.g. `50`, `100`)

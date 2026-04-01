@@ -15,8 +15,6 @@ public class TrainingGoal {
 
     public static final String VALIDATION_REGEX = "(?!.*\\b[a-zA-Z]{1,2}/)[^\\s].{0,199}";
 
-    public static final String DEFAULT_TRAINING_GOAL = "Get a 6 pack";
-
     public final String value;
 
     /**
