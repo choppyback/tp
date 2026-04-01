@@ -52,7 +52,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
 
         Optional<JsonSerializableAddressBook> jsonAddressBook = JsonUtil.readJsonFile(
                 filePath, JsonSerializableAddressBook.class);
-        if (!jsonAddressBook.isPresent()) {
+        if (jsonAddressBook.isEmpty()) {
             return Optional.empty();
         }
 
@@ -98,7 +98,7 @@ public class JsonAddressBookStorage implements AddressBookStorage {
             Files.copy(filePath, backupPath);
             logger.info("Corrupted address book backed up to " + backupPath);
         } catch (IOException e) {
-            logger.warning("Failed to back up corrupted address book: " + e.getMessage());
+            logger.warning("Failed to back up corrupted address book to " + e);
             return null;
         }
         return backupPath;

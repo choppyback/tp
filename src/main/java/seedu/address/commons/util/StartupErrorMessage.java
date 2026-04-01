@@ -33,7 +33,8 @@ public final class StartupErrorMessage {
             return "";
         }
         Optional<Path> backupPath = exception.getBackupFilePath();
-        return backupPath.map(path -> "\nCorrupted data has been backed up to " + path).orElse("");
+        return backupPath.map(path -> "\nCorrupted data has been backed up to " + path)
+                .orElse("\nFailed to backup corrupted data: check the logs for more information");
     }
 
     /**
