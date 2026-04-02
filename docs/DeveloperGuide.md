@@ -533,6 +533,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 7.  Should only be closed using the “exit” command or window close button or by killing the process.
 8.  Command input should not exceed 500 words.
 9.  Should only be opened through the command line.
+10. The command history will reset every time the application is closed
 
 *{More to be added}*
 
