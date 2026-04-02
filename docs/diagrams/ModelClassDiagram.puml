@@ -46,7 +46,6 @@ Person *--> Name
 Person *--> Phone
 Person *--> Email
 Person *--> Address
-Person *--> "*" Tag
 Person *--> Skill
 Person *--> "*" Timeslot
 Person *--> TrainingGoal
