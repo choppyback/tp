@@ -4,7 +4,7 @@
   pageNav: 3
 ---
 
-# PTCoach Developer Guide
+# PTcoach Developer Guide
 
 <!-- * Table of Contents -->
 <page-nav-print />
@@ -251,11 +251,6 @@ The following activity diagram summarizes what happens when a user executes a ne
 
 _{more aspects and alternatives to be added}_
 
-### \[Proposed\] Data archiving
-
-_{Explain here how the data archiving feature will be implemented}_
-
-
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -309,30 +304,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Use cases
 
-(For all use cases below, the **Actor** is the `Trainer` and the **System** is the `PTCoach`, unless specified otherwise)
+(For all use cases below, the **Actor** is the `Trainer` and the **System** is the `PTcoach`, unless specified otherwise)
 
 **Use case: UC1 - Add a client**
 
 **MSS**
 
 1. Trainer requests to add a client.
-2. PTCoach shows a success message.
+2. PTcoach shows a success message.
 
     Use case ends.
 
 **Extensions**
 * 1a. The given details are invalid.
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
     
     Use case ends.
   
 * 1b. The given client exists.
-  * 1b1. PTCoach shows an error message.
+  * 1b1. PTcoach shows an error message.
 
     Use case ends.
 
 * 1c. The given command has an incorrect format.
-  * 1c1. PTCoach shows an error message.
+  * 1c1. PTcoach shows an error message.
   
     Use case ends.
 
@@ -341,19 +336,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to find a specific clients.
-2. PTCoach shows list of all clients that match the person(s).
+2. PTcoach shows list of all clients that match the person(s).
 
    Use case ends.
 
 **Extensions**
 
 * 1a. Trainer searches for an invalid name.
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
     
     Use case ends.
 
 * 1b. The given command has an incorrect format.
-  * 1b1. PTCoach shows an error message.
+  * 1b1. PTcoach shows an error message.
   
     Use case ends.
         
@@ -366,29 +361,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. Trainer requests to edit a specific client.
-2. PTCoach shows a success message.
+2. PTcoach shows a success message.
 
     Use case ends.
 
 **Extensions**
 
 * 1a. Invalid index
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
   
     Use case ends.
   
 * 1b. Has missing parameters
-  * 1b1. PTCoach shows an error message.
+  * 1b1. PTcoach shows an error message.
         
     Use case ends.
 
 * 1c. No changes found
-  * 1c1. PTCoach shows a success message.
+  * 1c1. PTcoach shows a success message.
 
     Use case ends.
 
 * 1d. Incorrect format.
-  * 1d1. PTCoach shows an error message.
+  * 1d1. PTcoach shows an error message.
 
     Use case ends.
 
@@ -397,25 +392,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to delete a specific client by index.
-2. PTCoach deletes the client.
-3. PTCoach shows a success message confirming the deletion.
+2. PTcoach deletes the client.
+3. PTcoach shows a success message confirming the deletion.
 
    Use case ends
 
 **Extensions**
 
 * 1a. The list is empty.
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
 
     Use case ends.
 
 * 1b. The client does not exist.
-  * 1b1. PTCoach shows an error message.
+  * 1b1. PTcoach shows an error message.
 
     Use case ends.
 
 * 1c. The given command is in an incorrect format.
-  * 1c1. PTCoach shows an error message.
+  * 1c1. PTcoach shows an error message.
    
     Use case ends.
 
@@ -424,7 +419,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to launch the app via command line.
-2. PTCoach launches.
+2. PTcoach launches.
 
    Use case ends.
 
@@ -439,57 +434,56 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. Trainer requests to view clients (optionally filtered by skill).
-2. PTCoach shows a list of all clients.
-3. PTCoach shows a list of clients matching the request.
+2. PTcoach shows a list of all clients.
+3. PTcoach shows a list of clients matching the request.
 
    Use case ends.
 
 **Extensions**
 
 * 1a. The given command is in an incorrect format.
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
    
     Use case ends.
 
 * 2a. The list is empty.
-  * 2a1. PTCoach shows a message indicating that the list is empty.
+  * 2a1. PTcoach shows a message indicating that the list is empty.
    
     Use case ends.
 
 * 3a. No clients match the filter. 
-  * 3a1. PTCoach shows an empty list. 
+  * 3a1. PTcoach shows an empty list. 
   
     Use case ends.
   
 * 3b. Missing filter parameter
-  * 3b1. PTCoach shows a message indicating that the parameter is empty.
+  * 3b1. PTcoach shows a message indicating that the parameter is empty.
   
     Use case ends.
-
 
 **Use case: UC7 - Read client details**
 
 **MSS**
 
 1. Trainer requests to view a client’s details.
-2. PTCoach displays the requested client data.
+2. PTcoach displays the requested client data.
 
    Use case ends
 
 **Extensions**
 
 * 1a. The given details are invalid.
-  * 1a1. PTCoach shows an error message.
+  * 1a1. PTcoach shows an error message.
    
     Use case ends.
 
 * 1b. Client does not exist
-  * 1b1. PTCoach shows an error message.
+  * 1b1. PTcoach shows an error message.
 
     Use case ends
   
 * 1c. Trainer enters incorrect command format.
-  * 1c1. PTCoach shows an error message.
+  * 1c1. PTcoach shows an error message.
      
     Use case ends.
 
@@ -498,24 +492,24 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. Trainer presses the Up or Down arrow key.
-2. PTCoach displays the corresponding command from the command history.
+2. PTcoach displays the corresponding command from the command history.
 
     Use case ends.
 
 **Extensions**
 
 * 1a. There are no previously entered commands.  
-  * 1a1. PTCoach does not display any command.
+  * 1a1. PTcoach does not display any command.
   
   Use case ends.  
 
 * 1b. Trainer presses Up when already at the oldest command.
-  * 1b1. PTCoach keeps displaying the oldest command. 
+  * 1b1. PTcoach keeps displaying the oldest command. 
   
   Use case ends. 
 
 * 1c. Trainer presses Down when already at the most recent command.
-  * 1c1. PTCoach displays an empty input field.
+  * 1c1. PTcoach displays an empty input field.
   
   Use case ends.
 
