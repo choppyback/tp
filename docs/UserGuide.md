@@ -128,6 +128,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ts/TIMESLOT t/TRAINING_GOAL
 * Accepts any alphanumeric characters and spaces
 * Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
 * Cannot be blank
+* The max length for the training goal is 200 characters
 * This field is mandatory — every client must have a training goal specified
 
 **Progress Record (`pr/`):**
@@ -221,6 +222,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TR
 * Accepts any alphanumeric characters and spaces
 * Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
 * Cannot be blank
+* The max length for the training goal is 200 characters
 
 **Progress Record (`pr/`):**
 * Represents the client’s training progress as a percentage (e.g. `50`, `100`)
