@@ -10,9 +10,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class InjuryStatus {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Injury status should not be blank and should not contain flag-like patterns (e.g. 'x/', 'ab/').";
+            "Injury status should not be blank, must not exceed 300 characters, "
+                    + "and should not contain flag-like patterns (e.g. 't/', 'a/').";
 
     public static final String VALIDATION_REGEX = "(?!.*\\b[a-zA-Z]{1,2}/)[^\\s].*";
+
+    public static final int MAX_LENGTH = 300;
 
     public static final String DEFAULT_INJURY_STATUS = "Healthy";
 
@@ -33,7 +36,11 @@ public class InjuryStatus {
      * Returns true if a given string is a valid injury status.
      */
     public static boolean isValidInjuryStatus(String test) {
-        return test.matches(VALIDATION_REGEX);
+        requireNonNull(test);
+        String trimmed = test.trim();
+        return !trimmed.isEmpty()
+                && test.length() <= MAX_LENGTH
+                && trimmed.matches(VALIDATION_REGEX);
     }
 
     @Override
