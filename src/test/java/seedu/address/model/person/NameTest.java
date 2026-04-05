@@ -41,17 +41,22 @@ public class NameTest {
         assertFalse(Name.isValidName("'John")); // starts with apostrophe
         assertFalse(Name.isValidName(" John")); // starts with space
 
-        // BVA: Max length of name
+        // EP: Max length
         assertFalse(Name.isValidName("a" + "A".repeat(100))); // 101 characters (too long)
+
+        // EP: Valid length
         assertTrue(Name.isValidName("a" + "A".repeat(99))); // exactly 100 characters (boundary)
+        assertTrue(Name.isValidName("a"));
 
         // EP: Valid names
         assertTrue(Name.isValidName("peter jack")); // alphabets only
         assertTrue(Name.isValidName("Capital Tan")); // with capital letters
+        assertTrue(Name.isValidName("David Roger Jackson Ray")); // long name
+
+        // EP: Valid names with special characters
         assertTrue(Name.isValidName("Mary-Jane")); // hyphenated name
         assertTrue(Name.isValidName("O'Brien")); // apostrophe name
         assertTrue(Name.isValidName("José")); // accented characters
-        assertTrue(Name.isValidName("David Roger Jackson Ray")); // long name
     }
 
     @Test
