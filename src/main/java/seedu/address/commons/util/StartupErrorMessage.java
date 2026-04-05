@@ -8,14 +8,14 @@ import java.util.Optional;
  */
 public final class StartupErrorMessage {
     static final String FILE_LOAD_FAILURE_MESSAGE_FORMAT =
-            "WARNING: Data file at %s could not be loaded. Starting with an empty AddressBook.\n"
+            "WARNING: Data file at %s could not be loaded. Starting with an empty AddressBook.%n"
                     + "Check the logs for more information.";
 
     private static final String SAVED_INVALID_ENTRIES_MESSAGE =
-            "Invalid entries were found in %s.\n"
+            "Invalid entries were found in %s.%n"
                     + "Wrong entries saved to %s";
     private static final String UNSAVED_INVALID_ENTRIES_MESSAGE =
-            "Invalid entries were found in %s but saving them failed.\n"
+            "Invalid entries were found in %s but saving them failed.%Standardize startup warning line separatorsn"
                     + "Check the logs for more information.";
     private static final String DEFAULT_INVALID_ENTRIES_MESSAGE =
             "Invalid entries were found in %s";
