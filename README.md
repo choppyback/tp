@@ -32,5 +32,5 @@ PTCoach is optimized for trainers who prefer a fast Command Line Interface (CLI)
 
 * For the detailed documentation of this project, see the **[PTCoach Product Website](https://ay2526s2-cs2103-f11-3.github.io/tp/)**
 
-*This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org). 
+*This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 We hereby acknowledge their prior contributions and sincerely hope to take this project one step further.*
