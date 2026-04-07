@@ -67,26 +67,53 @@ public class Timeslot implements Comparable<Timeslot> {
         }
 
         String[] parts = test.split(":");
-        Set<Slot> slots = new TreeSet<>();
         String[] slotParts = parts[1].split(",");
-        for (String slot : slotParts) {
-            if (slot.contains("-")) {
-                String[] times = slot.split("-");
-                int startTime = Integer.parseInt(times[0]);
-                int endTime = Integer.parseInt(times[1]);
+        Set<Slot> slots = new TreeSet<>();
 
-                if (startTime >= endTime) {
-                    return false;
-                }
-            }
-            try {
-                if (!slots.add(Slot.toSlot(slot))) {
-                    return false;
-                }
-            } catch (IllegalArgumentException e) {
-                // catch time ranges more than an hour
+        for (String slot : slotParts) {
+            if (!isValidSlot(slot)) {
                 return false;
             }
+            if (!isUniqueSlot(slot, slots)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if a given string is a valid slot.
+     *
+     * @param slot String.
+     */
+    public static boolean isValidSlot(String slot) {
+        if (slot.contains("-")) {
+            String[] times = slot.split("-");
+            int startTime = Integer.parseInt(times[0]);
+            int endTime = Integer.parseInt(times[1]);
+
+            if (startTime >= endTime) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Returns true if a given string is unique in {@code existingSlots}.
+     *
+     * @param slot String.
+     * @param existingSlots Set of slots to be tested against for uniqueness.
+     */
+    public static boolean isUniqueSlot(String slot, Set<Slot> existingSlots) {
+        try {
+            Slot newSlot = Slot.toSlot(slot);
+            if (!existingSlots.add(newSlot)) {
+                return false;
+            }
+        } catch (IllegalArgumentException e) {
+            // catch time ranges more than an hour
+            return false;
         }
         return true;
     }
