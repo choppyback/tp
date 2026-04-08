@@ -36,7 +36,10 @@
       <VBox spacing="4">
         <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" />
         <Label fx:id="address" styleClass="cell_small_label" text="\$address" wrapText="true" />
-        <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+        <ScrollPane vbarPolicy="NEVER" hbarPolicy="AS_NEEDED" fitToHeight="true" styleClass="hover-scroll"
+                    style="-fx-background-color: transparent; -fx-background: transparent;">
+            <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
+        </ScrollPane>
       </VBox>
 
       <Region styleClass="divider" prefHeight="1" minHeight="1" maxHeight="1">
