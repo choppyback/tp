@@ -1,7 +1,7 @@
 ---
   layout: default.md
-  title: "User Guide"
-  pageNav: 3
+    title: "User Guide"
+    pageNav: 3
 ---
 
 # PTcoach User Guide
@@ -23,22 +23,22 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
 3. Copy the file to the folder you want to use as the _home folder_ for your PTcoach.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar PTcoach.jar` command to run the application.<br>
-   
+
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+    * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 100km ts/mon:1,3,5;tue:7 i/Healthy s/Beginner pr/50%` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 100km ts/mon:1,3,5;tue:7 i/Healthy s/Beginner pr/50%` : Adds a contact named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+    * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+    * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+    * `exit` : Exits the app.
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -65,6 +65,13 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+**Things to note:**<br>
+
+* PTcoach does **not** allow duplicate persons.<br>
+
+* A person is considered a duplicate if they have the same phone number.
+
 </box>
 
 ### Viewing help : `help`
@@ -116,7 +123,7 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ts/TIMESLOT t/TRAINING_GOAL
 * Must follow the format: 'day:slot[,slot...];day:slot'
 * Days must be a 3-letter abbreviations (`mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`)
 * Slots are integers from **1 to 12**, each representing a fixed 1-hour time period.
-  * eg. Slot 1 -> 0800 - 0900 and Slot 12 -> 1900 - 2000
+    * eg. Slot 1 -> 0800 - 0900 and Slot 12 -> 1900 - 2000
 * Multiple slots for the same day are separated by commas
 * Multiple days are separated by semicolons
 * No duplicate slots allowed for the same day
@@ -305,7 +312,7 @@ Format: `exit`
 
 ### Saving the data
 
-PTcoach saves to disk automatically every time a command runs. There is no need to save manually. 
+PTcoach saves to disk automatically every time a command runs. There is no need to save manually.
 
 The live data reside in `[JAR file location]/data/addressbook.json`.
 
