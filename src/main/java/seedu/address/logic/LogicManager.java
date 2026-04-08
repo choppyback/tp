@@ -3,7 +3,6 @@ package seedu.address.logic;
 import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.nio.file.Path;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -11,6 +10,9 @@ import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -27,8 +29,6 @@ public class LogicManager implements Logic {
 
     public static final String FILE_OPS_PERMISSION_ERROR_FORMAT =
             "Could not save data to file %s due to insufficient permissions to write to the file or the folder.";
-
-    private static final List<String> NON_SAVING_COMMANDS = List.of("list", "find", "help");
 
     private final Logger logger = LogsCenter.getLogger(LogicManager.class);
 
@@ -54,7 +54,7 @@ public class LogicManager implements Logic {
         commandResult = command.execute(model);
 
         try {
-            if (!NON_SAVING_COMMANDS.contains(commandText)) {
+            if (shouldSave(command)) {
                 storage.saveAddressBook(model.getAddressBook());
             }
         } catch (AccessDeniedException e) {
@@ -64,6 +64,12 @@ public class LogicManager implements Logic {
         }
 
         return commandResult;
+    }
+
+    private boolean shouldSave(Command command) {
+        return !(command instanceof ListCommand
+                || command instanceof FindCommand
+                || command instanceof HelpCommand);
     }
 
     @Override
