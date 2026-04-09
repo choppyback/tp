@@ -632,6 +632,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Session**: Period between opening PTcoach and closing it
 
+* **Default Skill Level**: The default skill level for a client is set to `Beginner`
+
+* **Default Injury Status**: The default injury status for a client is set to `Healthy`
+
+* **Default Progress Record**: The default progress record for a client is set to `0%`
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
