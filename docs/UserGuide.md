@@ -198,7 +198,7 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TR
 **Name (`n/`):**
 * Represents the full name of the client (e.g. `John Doe`)
 * Accepts alphabetical characters, spaces, hyphens (-), and apostrophes (') only — no numbers or symbols
-* Must not exceed 100 characters; names longer than 50 characters will be truncated in the display
+* Must not exceed 100 characters
 * Cannot start with a space, hyphen, or apostrophe
 * Cannot be blank if provided
 * This field is optional
