@@ -81,7 +81,7 @@ The `UI` component uses the JavaFx UI framework. The layout of these UI parts ar
 The `UI` component,
                                                             
 * executes user commands using the `Logic` component.
-* holds a list of past commands executed using the `CommmandHistory` component within CommandBox. (e.g 1:`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation`, 2:`list`.
+* holds a list of past commands executed using the `CommandHistory` component within CommandBox. (e.g 1:`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation`, 2:`list`.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
