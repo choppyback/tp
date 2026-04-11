@@ -20,14 +20,17 @@
       </padding>
 
       <HBox alignment="CENTER_LEFT" spacing="10">
-        <HBox alignment="CENTER_LEFT" spacing="5" HBox.hgrow="ALWAYS">
+        <HBox alignment="TOP_LEFT" spacing="5" HBox.hgrow="ALWAYS">
+          <HBox.margin>
+            <Insets top="12" />
+          </HBox.margin>
           <Label fx:id="id" styleClass="cell_big_label">
             <minWidth>
               <Region fx:constant="USE_PREF_SIZE" />
             </minWidth>
           </Label>
           <ScrollPane vbarPolicy="NEVER" hbarPolicy="AS_NEEDED" fitToHeight="true" styleClass="hover-scroll"
-                      style="-fx-background-color: transparent; -fx-background: transparent;"
+                      style="-fx-background-color: transparent; -fx-background: transparent; -fx-padding: 0;"
                       maxWidth="1000" HBox.hgrow="ALWAYS">
             <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
           </ScrollPane>
