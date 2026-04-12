@@ -209,13 +209,22 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TR
 * Must be between 3 and 15 digits long
 * Cannot be blank if provided
 * This field is optional
-
+  
+&nbsp;
 **Email (`e/`):**
 * Represents the email address of the client (e.g. `johnd@example.com`)
 * Must not exceed 200 characters
 * Must follow the format `local-part@domain` (e.g. `john@example.com`)
+* Constraints for email address are as follows:
+  * The local-part should only contain alphanumeric characters and these special characters, excluding the parentheses, (`+_.-`). The local-part may not start or end with any special characters.
+  * This is followed by a '@' and then a domain name. The domain name is made up of domain labels separated by periods.
+  * The domain name must:
+    * end with a domain label at least 2 characters long
+    * have each domain label start and end with alphanumeric characters
+    * have each domain label consist of alphanumeric characters, separated only by hyphens, if any
 * Both the local-part and domain cannot be blank
 * This field is optional
+&nbsp;
 
 **Address (`a/`):**
 * Represents the home or mailing address of the client (e.g. `John street, block 123, #01-01`)
