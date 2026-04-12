@@ -111,6 +111,7 @@
     },
     {
       "src": "UserGuide.md",
+      "title": "User Guide",
       "headings": {
         "ptcoach-user-guide": "PTcoach User Guide",
         "quick-start": "Quick start",
