@@ -284,6 +284,9 @@ PTcoach supports command history navigation similar to Unix command-line systems
 **Q**: I fixed one error but now I'm seeing a new one — did PTcoach introduce a new error?<br>
 **A**: Not at all! PTcoach stops at the first error it encounters, so earlier errors can hide ones further along. Each fix simply reveals the next issue in the command.
 
+**Q**: If names don't allow flag-like prefixes, how do I enter a client name like "Ryan S/O Duke"?<br>
+**A**: Special characters like `/` aren't supported in names. As a workaround, simply omit the slash — e.g. `Ryan SO Duke` — and your entry will still be saved correctly.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
