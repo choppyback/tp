@@ -641,7 +641,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 ### Requirements yet to be implemented
 
 1. Undo command:
-   As a coach, I can undo my previous command so that I can recover from mistakes.
+   As a coach, I want to undo the last command executed to quickly fix accidental deletions or edits.
 
 --------------------------------------------------------------------------------------------------------------------
 
