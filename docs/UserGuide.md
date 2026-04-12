@@ -287,6 +287,9 @@ PTcoach supports command history navigation similar to Unix command-line systems
 **Q**: If names don't allow flag-like prefixes, how do I enter a client name like "Ryan S/O Duke"?<br>
 **A**: Special characters like `/` aren't supported in names. As a workaround, simply omit the slash — e.g. `Ryan SO Duke` — and your entry will still be saved correctly.
 
+**Q**: My client's address contains a `/` — e.g. `a/Block 123, Clementi Ave 3, Unit B/12` — but it gets treated as a flag prefix. How do I enter it correctly?  
+**A**: This is a known limitation. As a workaround, add a space before the `/` — e.g. `Unit B /12` — and the address will be saved correctly.
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## Known issues
