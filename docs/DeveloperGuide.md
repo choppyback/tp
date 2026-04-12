@@ -417,12 +417,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **Extensions**
 
 * 1a. Trainer searches for an invalid name.
-  * 1a1. PTcoach shows an error message.
+  * 1a1. PTcoach shows no match.
     
     Use case ends.
 
 * 1b. The given command has an incorrect format.
-  * 1b1. PTcoach shows an error message.
+  * 1b1. PTcoach shows no match.
   
     Use case ends.
         
@@ -636,6 +636,12 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * **Default Injury Status**: The default injury status for a client is set to `Healthy`
 
 * **Default Progress Record**: The default progress record for a client is set to `0%`
+
+
+### Requirements yet to be implemented
+
+1. Undo command:
+   As a coach, I can undo my previous command so that I can recover from mistakes.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -910,4 +916,3 @@ testers are expected to do more *exploratory* testing.
 
    2. Launch the application.<br>
       Expected: The application loads an empty list.
-
