@@ -637,6 +637,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Default Progress Record**: The default progress record for a client is set to `0%`
 
+* **Flag-like prefixes**: Matches strings that start with one or two alphabetic characters (A–Z, case-insensitive), followed by a forward slash `/`
+
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**

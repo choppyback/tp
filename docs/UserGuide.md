@@ -61,7 +61,7 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
 * Parameters can be in any order.<br>
   e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
+* Extraneous parameters for commands that do not take in parameters (such as `help`, `exit` and `clear`) will be ignored.<br>
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
@@ -89,78 +89,6 @@ Adds a person to the address book.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ts/TIMESLOT t/TRAINING_GOAL [pr/PROGRESS_RECORD] [i/INJURY_STATUS] [s/SKILL]`
 
-**Name (`n/`):**
-* Represents the full name of the client (e.g. `John Doe`)
-* Accepts alphabetical characters, spaces, hyphens (-), and apostrophes (') only — no numbers or symbols
-* Must not exceed 100 characters; names longer than 50 characters will be truncated in the display
-* Cannot start with a space, hyphen, or apostrophe
-* Cannot be blank
-* This field is mandatory
-
-**Phone Number (`p/`):**
-* Represents the contact number of the client (e.g. `98765432`)
-* Accepts numerals only — no spaces, dashes, or other characters
-* Must be between 3 and 15 digits long
-* Cannot be blank
-* This field is mandatory
-
-**Email (`e/`):**
-* Represents the email address of the client (e.g. `johnd@example.com`)
-* Must not exceed 200 characters
-* Must follow the format `local-part@domain` (e.g. `john@example.com`)
-* Both the local-part and domain cannot be blank
-* This field is mandatory
-
-**Address (`a/`):**
-* Represents the home or mailing address of the client (e.g. `John street, block 123, #01-01`)
-* Accepts any non-blank characters
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Cannot be blank
-* This field is mandatory
-
-**Timeslot (`ts/`):**
-* Represents the weekly training schedule of the client (e.g. `mon:1,3,5;tue:7`)
-* Must follow the format: 'day:slot[,slot...];day:slot'
-* Days must be a 3-letter abbreviations (`mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`)
-* Slots are integers from **1 to 12**, each representing a fixed 1-hour time period.
-    * eg. Slot 1 -> 0800 - 0900 and Slot 12 -> 1900 - 2000
-* Multiple slots for the same day are separated by commas
-* Multiple days are separated by semicolons
-* No duplicate slots allowed for the same day
-* Cannot be blank
-* This field is mandatory
-
-**Training Goal (`t/`):**
-* Represents the fitness or performance goal of the client (e.g. `run 50km`, `lift 100kg`)
-* Accepts any non-blank characters
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Must no exceed 200 characters
-* Cannot be blank
-* This field is mandatory
-
-**Progress Record (`pr/`):**
-* Represents the client’s training progress as a percentage (e.g. `50%`, `100%`)
-* Accepts integers from `0 to 100`
-* Must be a whole number with % appended at the end (e.g. 0%, 50%)
-* Cannot be blank if provided
-* This field is optional; Will be set to 0% if not provided
-
-**Injury Status (`i/`):**
-* Represents any injury or physical limitation of the client (e.g. `L4/L5 disc herniation`, `ACL tore`)
-* Accepts any alphanumeric characters and spaces
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Must not exceed 300 characters
-* Cannot be blank if provided
-* This field is optional; Will be set to "Healthy" if not provided
-
-**Skill Level (`s/`):**
-* Represents the client’s current fitness or skill level
-* Must be one of the following values: `beginner`, `intermediate`, `expert`
-* Input is case-insensitive (e.g. `Beginner`, `BEGINNER` are accepted)
-* Will be stored in capitalized form (e.g. `Beginner`)
-* Cannot be blank if provided
-* This field is optional; Will be set to "Beginner" if not provided
-
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation pr/100%`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison t/Lift 100kg ts/mon:1,3;sat:2,4`
@@ -170,15 +98,6 @@ Examples:
 Shows a list of all persons in the address book, with an optional skill filter.
 
 Format: `list [s/SKILL]`
-
-**Skill Filter (`s/`):**
-* Filters the list to show only clients with a matching skill level: `Beginner`, `Intermediate`, or `Expert`
-* Skill level is case-insensitive (e.g. `s/expert`, `s/EXPERT`, and `s/Expert` all work)
-* Multiple skill filters can be provided to match clients with any of the specified skill levels (e.g. `s/beginner s/expert`)
-* If no skill filter is provided, all clients are listed
-* Invalid skill levels (e.g. `list s/advanced`) will result in an error
-* Cannot be blank if provided
-* This field is optional
 
 Examples:
 * `list` — lists all persons
@@ -194,78 +113,6 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TR
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the displayed person list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-
-**Name (`n/`):**
-* Represents the full name of the client (e.g. `John Doe`)
-* Accepts alphabetical characters, spaces, hyphens (-), and apostrophes (') only — no numbers or symbols
-* Must not exceed 100 characters
-* Cannot start with a space, hyphen, or apostrophe
-* Cannot be blank if provided
-* This field is optional
-
-**Phone Number (`p/`):**
-* Represents the contact number of the client (e.g. `98765432`)
-* Accepts numerals only — no spaces, dashes, or other characters
-* Must be between 3 and 15 digits long
-* Cannot be blank if provided
-* This field is optional
-
-**Email (`e/`):**
-* Represents the email address of the client (e.g. `johnd@example.com`)
-* Must not exceed 200 characters
-* Must follow the format `local-part@domain` (e.g. `john@example.com`)
-* Both the local-part and domain cannot be blank
-* This field is optional
-
-**Address (`a/`):**
-* Represents the home or mailing address of the client (e.g. `John street, block 123, #01-01`)
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Accepts any non-blank characters
-* Cannot be blank if provided
-* This field is optional
-
-**Timeslot (`ts/`):**
-* Represents the weekly training schedule of the client (e.g. `mon:1,3,5;tue:7`)
-* Must follow the format: 'day:slot[,slot...];day:slot'
-* Days must be a 3-letter abbreviations (`mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`)
-* Slots are integers from **1 to 12**, each representing a fixed 1-hour time period.
-    * eg. Slot 1 -> 0800 - 0900 and Slot 12 -> 1900 - 2000
-* Multiple slots for the same day are separated by commas
-* Multiple days are separated by semicolons
-* No duplicate slots allowed for the same day
-* Cannot be blank if provided
-* This field is optional
-
-**Training Goal (`t/`):**
-* Represents the fitness or performance goal of the client (e.g. `run 50km`, `lift 100kg`)
-* Accepts any alphanumeric characters and spaces
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Must not exceed 200 characters
-* Cannot be blank if provided
-* This field is optional
-
-**Progress Record (`pr/`):**
-* Represents the client’s training progress as a percentage (e.g. `50%`, `100%`)
-* Accepts integers from `0 to 100`
-* Must be a whole number with `%` appended to the end
-* Cannot be blank if provided
-* This field is optional
-
-**Injury Status (`i/`):**
-* Represents any injury or physical limitation of the client (e.g. `L4/L5 disc herniation`, `ACL tore`)
-* Accepts any alphanumeric characters and spaces
-* Must not contain substrings that resemble command prefixes (e.g. `a/`, `p/`, `i/`, `t/`, `ts/`, `s/`, `pr/`)
-* Must not exceed 300 characters
-* Cannot be blank if provided
-* This field is optional
-
-**Skill Level (`s/`):**
-* Represents the client’s current fitness or skill level (e.g. `Beginner`)
-* Must be one of the following values: `beginner`, `intermediate`, `expert`
-* Input is case-insensitive (e.g. `Beginner`, `BEGINNER` are accepted)
-* Will be stored in capitalized form (e.g. `Beginner`)
-* Cannot be blank if provided
-* This field is optional
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
@@ -344,6 +191,82 @@ PTcoach supports command history navigation similar to Unix command-line systems
 * Press the **Up** arrow key to view previously entered commands.
 * Press the **Down** arrow key to move towards more recent commands.
 * This allows users to quickly reuse or edit past commands without retyping them.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## Flag Constraints
+
+**Name (`n/`):**
+* Represents the full name of the client (e.g. `John Doe`)
+* Accepts alphabetical characters, spaces, hyphens (-), and apostrophes (') only — no numbers or symbols
+* Cannot start with a space, hyphen, or apostrophe
+* Cannot be blank
+* Must not exceed 100 characters
+* This field is mandatory
+
+**Phone Number (`p/`):**
+* Represents the contact number of the client (e.g. `98765432`)
+* Accepts numerals only — no spaces, dashes, or other characters
+* Must be between 3 and 15 digits long
+* Cannot be blank
+* This field is mandatory
+
+**Email (`e/`):**
+* Represents the email address of the client (e.g. `johnd@example.com`)
+* Must not exceed 200 characters
+* Must follow the format `local-part@domain` (e.g. `john@example.com`)
+* Both the local-part and domain cannot be blank
+* This field is mandatory
+
+**Address (`a/`):**
+* Represents the home or mailing address of the client (e.g. `John street, block 123, #01-01`)
+* Accepts any non-blank characters
+* Must not contain substrings that resemble flag-like prefixes (e.g. `x/`, `xx/`)
+* Cannot be blank
+* This field is mandatory
+
+**Timeslot (`ts/`):**
+* Represents the weekly training schedule of the client (e.g. `mon:1,3,5;tue:7`)
+* Must follow the format: 'day:slot[,slot...];day:slot'
+* Days must be a 3-letter abbreviations (`mon`, `tue`, `wed`, `thu`, `fri`, `sat`, `sun`)
+* Slots are integers from **1 to 12**, each representing a fixed 1-hour time period.
+    * eg. Slot 1 -> 0800 - 0900 and Slot 12 -> 1900 - 2000
+* Multiple slots for the same day are separated by commas
+* Multiple days are separated by semicolons
+* No duplicate slots allowed for the same day
+* Cannot be blank
+* This field is mandatory
+
+**Training Goal (`t/`):**
+* Represents the fitness or performance goal of the client (e.g. `run 50km`, `lift 100kg`)
+* Accepts any non-blank characters
+* Must not contain substrings that resemble flag-like prefixes (e.g. `x/`, `xx/`)
+* Must not exceed 200 characters
+* Cannot be blank
+* This field is mandatory
+
+**Progress Record (`pr/`):**
+* Represents the client’s training progress as a percentage (e.g. `50%`, `100%`)
+* Accepts integers from `0 to 100`
+* Must be a whole number with % appended at the end (e.g. 0%, 50%)
+* Cannot be blank if provided
+* This field is optional. Will be set to 0% if not provided
+
+**Injury Status (`i/`):**
+* Represents any injury or physical limitation of the client (e.g. `L4/L5 disc herniation`, `ACL tore`)
+* Accepts any non-blank characters
+* Must not contain substrings that resemble flag-like prefixes (e.g. `x/`, `xx/`)
+* Must not exceed 300 characters
+* Cannot be blank if provided
+* This field is optional. Will be set to "Healthy" if not provided
+
+**Skill Level (`s/`):**
+* Represents the client’s current fitness or skill level
+* Must be one of the following values: `beginner`, `intermediate`, `expert`
+* Input is case-insensitive (e.g. `Beginner`, `BEGINNER` are accepted)
+* Will be stored in capitalized form (e.g. `Beginner`)
+* Cannot be blank if provided
+* This field is optional. Will be set to "Beginner" if not provided
 
 --------------------------------------------------------------------------------------------------------------------
 
