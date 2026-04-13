@@ -661,7 +661,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   2. Open a command terminal, cd into the folder you put the jar file in, and use the `java -jar PTcoach.jar` command to run the application.
+   2. Open a command terminal, cd into the folder you put the jar file in, and run `java -jar PTcoach-vX.Y.Z.jar` to launch the application, where `X.Y.Z` is the version number (e.g., `PTcoach-v1.5.1.jar`)
 
 2. Saving window preferences
 
