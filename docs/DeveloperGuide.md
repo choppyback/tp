@@ -421,7 +421,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
     Use case ends.
 
 * 1b. The given command has an incorrect format.
-  * 1b1. PTcoach shows no match.
+  * 1b1. PTcoach shows an error message.
   
     Use case ends.
         
@@ -908,4 +908,4 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: The data file `[JAR file location]/data/addressbook.json` contains invalid JSON.
 
    2. Launch the application.<br>
-      Expected: The application loads an empty list.
+      Expected: The application display an error message.
