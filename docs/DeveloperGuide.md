@@ -81,7 +81,7 @@ The `UI` component uses the JavaFx UI framework. The layout of these UI parts ar
 The `UI` component,
                                                             
 * executes user commands using the `Logic` component.
-* holds a list of past commands executed using the `CommmandHistory` component within CommandBox. (e.g 1:`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation`, 2:`list`.
+* holds a list of past commands executed using the `CommandHistory` component within CommandBox. (e.g 1:`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation`, 2:`list`.
 * listens for changes to `Model` data so that the UI can be updated with the modified data.
 * keeps a reference to the `Logic` component, because the `UI` relies on the `Logic` to execute commands.
 * depends on some classes in the `Model` component, as it displays `Person` object residing in the `Model`.
@@ -180,14 +180,14 @@ Step 1. The user launches the application. For the purpose of this example, assu
 
 <puml src="diagrams/CommandHistoryState0.puml" alt="CommandHistoryState0" />
 
-Step 2. The user enters 3 commands in order: `help`, `list`, `list s/advancd`,
+Step 2. The user enters 3 commands in order: `help`, `list`, `list s/beginnerr`,
 <puml src="diagrams/CommandHistoryState1.puml" alt="CommandHistoryState1" />
 
-Step 3. The user presses `Up` key, to retrieve back the past submitted command (`list s/advancd`).
+Step 3. The user realises he made a typo, and presses `Up` key to retrieve back the past submitted command (`list s/beginnerr`).
 
 <puml src="diagrams/CommandHistoryState2.puml" alt="CommandHistoryState2" />
 
-Step 4. The user resubmits a new command (`list s/advanced`).
+Step 4. The user resubmits a new command (`list s/beginner`).
 
 <puml src="diagrams/CommandHistoryState3.puml" alt="CommandHistoryState3" />
 
@@ -212,7 +212,7 @@ Step 6. The user presses `Down` key once, and `list` is shown in the Command tex
 
 <puml src="diagrams/CommandHistoryState5.puml" alt="CommandHistoryState5" />
 
-Step 7. After executing the command, `list` is appended to the command history and current is updated to the size of `Command History`
+Step 7. After executing the command, `list` is appended to the command history and current is updated to the size of `commandHistory`
 <puml src="diagrams/CommandHistoryState6.puml" alt="CommandHistoryState6" />
 
 The following activity diagram summarizes what happens when users want to navigate the command history of their current session.
@@ -831,10 +831,10 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 
    2. Test case: `delete 1`<br>
-      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+      Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message.
 
    3. Test case: `delete 0`<br>
-      Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+      Expected: No person is deleted. Error details shown in the status message.
 
    4. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
