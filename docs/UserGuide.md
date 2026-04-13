@@ -1,7 +1,7 @@
 ---
-  layout: default.md
-  title: "User Guide"
-  pageNav: 3
+layout: default.md
+title: "User Guide"
+pageNav: 3
 ---
 
 # PTcoach User Guide
@@ -15,7 +15,7 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
+1. Ensure you have Java `17` or above installed in your computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S2-CS2103-F11-3/tp/releases).
@@ -32,7 +32,7 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
 
     * `list` : Lists all contacts.
 
-    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 100km ts/mon:1,3,5;tue:7 i/Healthy s/Beginner pr/50%` : Adds a contact named `John Doe` to the Address Book.
+    * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 100km ts/mon:1,3,5;tue:7 i/Healthy s/Beginner pr/50%` : Adds a contact named `John Doe` to PTcoach.
 
     * `delete 3` : Deletes the 3rd contact shown in the current list.
 
@@ -48,33 +48,32 @@ PTcoach is a **desktop app for managing client contacts, optimized for use via a
 
 ## Features
 
-<box type="info" seamless>
+This page is the shared reference for how PTcoach commands are written and interpreted. Read the command format notes once before using the command sections below.
 
-**Notes about the command format:**<br>
+### 1. Command format
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user.<br>
-  e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user.
+  For example, in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
 
-* Items in square brackets are optional.<br>
-  e.g `n/NAME [s/SKILL]` can be used as `n/John Doe s/intermediate` or as `n/John Doe`.
+* Items in square brackets are optional.
+  For example, `n/NAME [s/SKILL]` can be used as `n/John Doe s/intermediate` or as `n/John Doe`.
 
-* Parameters can be in any order.<br>
-  e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Parameters can be in any order.
+  For example, if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
-* Extraneous parameters for commands that do not take in parameters (such as `help`, `list`, `exit` and `clear`) will be ignored.<br>
-  e.g. if the command specifies `help 123`, it will be interpreted as `help`.
+* Extraneous parameters for commands that do not take in parameters, such as `help`, `list`, `exit`, and `clear`, will be ignored.
+  For example, if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 
-**Things to note:**<br>
+### 2. General notes
 
-* PTcoach does **not** allow duplicate persons.<br>
-
+* PTcoach does **not** allow duplicate persons.
 * A person is considered a duplicate if they have the same phone number.
 
-</box>
+### 3. Viewing and finding persons
 
-### Viewing help : `help`
+#### 3.1 Viewing help : `help`
 
 Shows a message explaining how to access the help page.
 
@@ -82,10 +81,44 @@ Shows a message explaining how to access the help page.
 
 Format: `help`
 
+#### 3.2 Listing all persons : `list`
 
-### Adding a person: `add`
+Shows a list of all persons in PTcoach, with an optional skill filter.
 
-Adds a person to the address book.
+Format: `list [s/SKILL]`
+
+**Skill Filter (`s/`):**
+* Filters the list to show only clients with a matching skill level: `Beginner`, `Intermediate`, or `Expert`
+* Skill level is case-insensitive (e.g. `s/expert`, `s/EXPERT`, and `s/Expert` all work)
+* Multiple skill filters can be provided to match clients with any of the specified skill levels (e.g. `s/beginner s/expert`)
+* If no skill filter is provided, all clients are listed
+* Invalid skill levels (e.g. `list s/advanced`) will result in an error
+* Cannot be blank if provided
+* This field is optional
+
+Examples:
+* `list` — lists all persons
+* `list s/beginner` — lists all persons with beginner skill level
+* `list s/beginner s/expert` — lists all persons with beginner or expert skill level
+
+#### 3.3 Locating persons by name: `find`
+
+Finds persons whose names contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `hans` will match `Hans`
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`
+* Persons matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+
+### 4. Managing persons
+
+#### 4.1 Adding a person: `add`
+
+Adds a person to PTcoach.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS ts/TIMESLOT t/TRAINING_GOAL [pr/PROGRESS_RECORD] [i/INJURY_STATUS] [s/SKILL]`
 
@@ -165,29 +198,9 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Run 50km ts/mon:1,2 i/Shoulder dislocation pr/100%`
 * `add n/Betsy Crowe p/1234567 e/betsycrowe@example.com a/Newgate Prison t/Lift 100kg ts/mon:1,3;sat:2,4`
 
-### Listing all persons : `list`
+#### 4.2 Editing a person : `edit`
 
-Shows a list of all persons in the address book, with an optional skill filter.
-
-Format: `list [s/SKILL]`
-
-**Skill Filter (`s/`):**
-* Filters the list to show only clients with a matching skill level: `Beginner`, `Intermediate`, or `Expert`
-* Skill level is case-insensitive (e.g. `s/expert`, `s/EXPERT`, and `s/Expert` all work)
-* Multiple skill filters can be provided to match clients with any of the specified skill levels (e.g. `s/beginner s/expert`)
-* If no skill filter is provided, all clients are listed
-* Invalid skill levels (e.g. `list s/advanced`) will result in an error
-* Cannot be blank if provided
-* This field is optional
-
-Examples:
-* `list` — lists all persons
-* `list s/beginner` — lists all persons with beginner skill level
-* `list s/beginner s/expert` — lists all persons with beginner or expert skill level
-
-### Editing a person : `edit`
-
-Edits an existing person in the address book.
+Edits an existing person in PTcoach.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [ts/TIMESLOT] [t/TRAINING GOAL] [pr/PROGRESS_RECORD] [i/INJURY_STATUS] [s/SKILL]`
 
@@ -272,22 +285,9 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower` Edits the name of the 2nd person to be `Betsy Crower`.
 
-### Locating persons by name: `find`
+#### 4.3 Deleting a person : `delete`
 
-Finds persons whose names contain any of the given keywords.
-
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-
-### Deleting a person : `delete`
-
-Deletes the specified person from the address book.
+Deletes the specified person from PTcoach.
 
 Format: `delete INDEX`
 
@@ -296,28 +296,30 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd person in the address book.
+* `list` followed by `delete 2` deletes the 2nd person in PTcoach.
 * `find Betsy` followed by `delete 1` deletes the 1st person in the results of the `find` command.
 
-### Clearing all entries : `clear`
+#### 4.4 Clearing all entries : `clear`
 
 Clears all entries from PTcoach.
 
 Format: `clear`
 
-### Exiting the program : `exit`
+### 5. Additional information
+
+#### 5.1 Exiting the program : `exit`
 
 Exits the program.
 
 Format: `exit`
 
-### Saving the data
+#### 5.2 Saving the data
 
-PTcoach saves to disk automatically every time a command runs. There is no need to save manually.
+PTcoach automatically saves data after commands that modify it, so manual saving is not needed. Read-only commands such as `list`, `find`, and `help` do not trigger a save.
 
-The live data reside in `[JAR file location]/data/addressbook.json`.
+The live data resides in `[JAR file location]/data/addressbook.json`.
 
-### Editing the data file
+#### 5.3 Editing the data file
 
 Advanced users are welcome to update data directly by editing `[JAR file location]/data/addressbook.json`.
 
@@ -330,7 +332,7 @@ Advanced users are welcome to update data directly by editing `[JAR file locatio
 
 </box>
 
-### Logging
+#### 5.4 Logging
 
 PTcoach keeps logs to help diagnose startup, command, and data-loading issues.
 
@@ -338,7 +340,7 @@ PTcoach keeps logs to help diagnose startup, command, and data-loading issues.
 * PTcoach may create rotated log files such as `addressbook.log.0` automatically when the current log file grows large.
 * If PTcoach shows a message telling you to check the logs, open the latest `addressbook.log` file to inspect the detailed error information.
 
-### Command History Navigation
+#### 5.5 Command History Navigation
 
 PTcoach supports command history navigation similar to Unix command-line systems.
 
@@ -350,7 +352,7 @@ PTcoach supports command history navigation similar to Unix command-line systems
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
+**Q**: How do I transfer my data to another computer?<br>
 **A**: Copy `addressbook.json` into the folder you want to move to. (e.g `/path/to/PTcoach/data/addressbook.json`). PTcoach will automatically load the data.
 
 **Q**: Why does PTcoach only show one error at a time even if I have multiple invalid parameters?<br>
