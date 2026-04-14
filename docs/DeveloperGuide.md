@@ -18,7 +18,14 @@
   * [JavaFX](https://openjfx.io/)
   * [Jackson](https://github.com/FasterXML/jackson)
   * [JUnit5](https://github.com/junit-team/junit5)
---------------------------------------------------------------------------------------------------------------------
+
+* AI Usage Declaration
+  * Seth 
+    * used ChatGPT as a coding assistant to review test coverage, suggest missing equivalence partitions, and help refine documentation wording. 
+    * used ChatGPT to help check Javadoc comments for clarity, consistency, and completeness.
+    * used ChatGPT for troubleshooting errors in code
+    * used ChatGPT to help with some refactoring
+    * Implementation decisions and code changes were made by the student.
 
 ## **Setting up, getting started**
 
@@ -323,8 +330,73 @@ The following activity diagram summarizes what happens when a user executes a `l
     * Pros: Useful if a person can hold multiple skill levels simultaneously.
     * Cons: Since each person has exactly one skill level, AND logic across different values would always return an empty list, making it unintuitive and unhelpful.
 
-_{more aspects and alternatives to be added}_
+### Handling Invalid Data During Startup
+#### Implementation
 
+Invalid data handling during startup is facilitated by `JsonAddressBookStorage`,
+`JsonSerializableAddressBook`, `AddressBookLoadResult`, `InvalidPersonRecord`, and
+`StartupErrorMessage`.
+
+When the application starts, `MainApp` asks `Storage` for the address book using
+`readAddressBookWithResult()`. `JsonAddressBookStorage` reads the JSON file into a
+`JsonSerializableAddressBook`. `JsonSerializableAddressBook#toModelType()` then attempts to convert
+each `JsonAdaptedPerson` into a model `Person`. Valid entries are added to the loaded address book,
+while invalid or duplicate entries are skipped and recorded as `InvalidPersonRecord` objects.
+`JsonAddressBookStorage` then retrieves those invalid entries using
+`JsonSerializableAddressBook#getInvalidPersonRecords()` and saves them to a separate timestamped
+file with the file name format `"<original-file-name>-invalid-yyyyMMdd-HHmmss.txt"`, beside the original data file when possible. Finally, it returns an `AddressBookLoadResult`
+containing the loaded data and metadata about any invalid entries, and `StartupErrorMessage` is
+used by `MainApp` to build the warning shown to the user when invalid entries were found.
+
+Given below is an example usage scenario showing how invalid data is handled at each step.
+
+1. The user launches the application with a data file that contains both valid and invalid person
+entries.
+
+2. `MainApp` calls `Storage#readAddressBookWithResult()`. `JsonAddressBookStorage` reads the JSON
+file and parses it into a `JsonSerializableAddressBook`.
+
+3. `JsonSerializableAddressBook#toModelType()` attempts to convert each `JsonAdaptedPerson` into a
+model `Person`. Valid persons are added to the `AddressBook`, while invalid or duplicate entries
+are recorded as `InvalidPersonRecord` objects and skipped.
+
+4. `JsonAddressBookStorage` retrieves the invalid records from `JsonSerializableAddressBook` using
+`getInvalidPersonRecords()`. If any invalid records exist, it saves them to a separate timestamped
+file beside the original data file.
+
+5. `JsonAddressBookStorage` returns an `AddressBookLoadResult` containing the loaded
+`ReadOnlyAddressBook` and metadata about any invalid entries, including whether they existed and
+where they were saved if saving succeeded.
+
+6. `MainApp` checks the returned `AddressBookLoadResult`. If invalid entries were found, it uses
+`StartupErrorMessage` to build a startup warning message, which is shown to the user when the UI
+starts.
+
+The following sequence diagram shows how invalid entries are processed during startup.
+
+**Note:** The `[` at the start of the opt conditions are due to PlantUML limitations, please ignore the symbol.
+
+<puml src="diagrams/InvalidDataLoadSequenceDiagram.puml" alt="InvalidDataLoadSequenceDiagram" />
+
+The following activity diagram summarizes what happens when the application starts with invalid
+data present in the file.
+
+<puml src="diagrams/InvalidDataLoadActivityDiagram.puml" alt="InvalidDataLoadActivityDiagram" />
+
+#### Design Considerations
+
+**Aspect: How invalid entries are saved:**
+
+* **Alternative 1: Save the entire file as a copy**
+    * Preserves all information, but also duplicates valid data and can create confusion when only invalid entries need attention.
+
+* **Alternative 2: Do not save a file but only report the invalid line numbers in current file**
+    * This avoids creating extra files, but the invalid data is not preserved for later inspection.
+    * Users only see which lines failed, so debugging is less convenient than reviewing a saved copy.
+
+* **Alternative 3 (current choice): Save invalid entries to a separate timestamped file**
+    * Preserves the original address book file, isolates invalid records for debugging, and makes it easy to inspect past failures. 
+    * The timestamp in the filename makes each failure file easy to identify and trace back to a specific load attempt.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
@@ -682,7 +754,7 @@ testers are expected to do more *exploratory* testing.
 
    1. Download the jar file and copy into an empty folder
 
-   2. Double-click the jar file Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   2. Open a command terminal, cd into the folder you put the jar file in, and run `java -jar PTcoach-vX.Y.Z.jar` to launch the application, where `X.Y.Z` is the version number (e.g., `PTcoach-v1.5.1.jar`)
 
 2. Saving window preferences
 
@@ -928,11 +1000,23 @@ testers are expected to do more *exploratory* testing.
    1. Prerequisites: The data file `[JAR file location]/data/addressbook.json` does not exist.
 
    2. Launch the application.<br>
-      Expected: The application starts successfully with an empty list.
-   
+      Expected: The application starts successfully with the sample address book.
+
 3. Dealing with corrupted data file
 
-   1. Prerequisites: The data file `[JAR file location]/data/addressbook.json` contains invalid JSON.
+   1. Prerequisites: The data file `[JAR file location]/data/addressbook.json` contains both valid and invalid entries.
 
    2. Launch the application.<br>
-      Expected: The application loads an empty list.
+      Expected: The application starts successfully, filled with valid entries, and a warning is shown. Invalid entries are saved to a timestamped file
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Planned Enhancements**
+
+This section will be used to document planned improvements for future versions of PTcoach.
+
+1. Improve file loading so the app reports all invalid fields in an invalid entry, instead of stopping validation for that entry at the first detected error.
+
+2. Allow users to fix invalid records directly from the CLI instead of editing the data file
+   manually.
+   
