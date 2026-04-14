@@ -19,7 +19,7 @@ JsonSerializable --> JsonStorage : AddressBook
 JsonStorage -> JsonSerializable : getInvalidPersonRecords()
 JsonSerializable --> JsonStorage : List<InvalidPersonRecord>
 
-opt invalid records exist
+opt \t  [invalid entries exist
   JsonStorage -> JsonStorage : saveInvalidEntries(...)
 end
 JsonStorage --> StorageManager : AddressBookLoadResult

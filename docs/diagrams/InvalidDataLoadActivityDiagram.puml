@@ -11,7 +11,7 @@ start
 :StorageManager delegates to JsonAddressBookStorage;
 :JsonAddressBookStorage reads JSON into JsonSerializableAddressBook;
 :Convert entries into the model;
-:Collect invalid person records;
+:Collect invalid entries;
 
 if () then ([invalid entries found])
   :Save invalid entries to a timestamped file;
@@ -22,7 +22,6 @@ if () then ([invalid entries found])
     :Store invalid entries save failure metadata;
   endif
 else ([no invalid entries])
-  :Prepare load result with loaded address book;
 endif
 
 :JsonAddressBookStorage returns AddressBookLoadResult;

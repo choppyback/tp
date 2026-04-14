@@ -342,9 +342,9 @@ When the application starts, `MainApp` asks `Storage` for the address book using
 `JsonSerializableAddressBook`. `JsonSerializableAddressBook#toModelType()` then attempts to convert
 each `JsonAdaptedPerson` into a model `Person`. Valid entries are added to the loaded address book,
 while invalid or duplicate entries are skipped and recorded as `InvalidPersonRecord` objects.
-`JsonAddressBookStorage` then retrieves those invalid records using
+`JsonAddressBookStorage` then retrieves those invalid entries using
 `JsonSerializableAddressBook#getInvalidPersonRecords()` and saves them to a separate timestamped
-file beside the original data file when possible. Finally, it returns an `AddressBookLoadResult`
+file with the file name format `"<original-file-name>-invalid-yyyyMMdd-HHmmss.txt"`, beside the original data file when possible. Finally, it returns an `AddressBookLoadResult`
 containing the loaded data and metadata about any invalid entries, and `StartupErrorMessage` is
 used by `MainApp` to build the warning shown to the user when invalid entries were found.
 
@@ -374,6 +374,8 @@ starts.
 
 The following sequence diagram shows how invalid entries are processed during startup.
 
+**Note:** The `[` at the start of the opt conditions are due to PlantUML limitations, please ignore the symbol.
+
 <puml src="diagrams/InvalidDataLoadSequenceDiagram.puml" alt="InvalidDataLoadSequenceDiagram" />
 
 The following activity diagram summarizes what happens when the application starts with invalid
@@ -381,6 +383,20 @@ data present in the file.
 
 <puml src="diagrams/InvalidDataLoadActivityDiagram.puml" alt="InvalidDataLoadActivityDiagram" />
 
+#### Design Considerations
+
+**Aspect: How invalid entries are saved:**
+
+* **Alternative 1: Save the entire file as a copy**
+    * Preserves all information, but also duplicates valid data and can create confusion when only invalid entries need attention.
+
+* **Alternative 2: Do not save a file but only report the invalid line numbers in current file**
+    * This avoids creating extra files, but the invalid data is not preserved for later inspection.
+    * Users only see which lines failed, so debugging is less convenient than reviewing a saved copy.
+
+* **Alternative 3 (current choice): Save invalid entries to a separate timestamped file**
+    * Preserves the original address book file, isolates invalid records for debugging, and makes it easy to inspect past failures. 
+    * The timestamp in the filename makes each failure file easy to identify and trace back to a specific load attempt.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Documentation, logging, testing, configuration, dev-ops**
